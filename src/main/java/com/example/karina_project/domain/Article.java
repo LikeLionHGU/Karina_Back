@@ -1,49 +1,39 @@
 package com.example.karina_project.domain;
 
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.*;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-
+@Getter @Setter
+@AllArgsConstructor @NoArgsConstructor
 public class Article {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    long userId;
-    String photo;
-    String name;
-    String instaUrl;
-    String kakaoUrl;
-    String youtubeUrl;
-    String notionUrl;
-    String url;
-    int mandatorySemesters;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fisher_num", nullable = false)
+    private Fisher fisher;
 
-    @Lob
-    @Column(columnDefinition = "TEXT")
-    String content;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "factory_num", nullable = false)
+    private Factory factory;
 
-    String category;
+    @Column(name = "fish_species")
+    private String fishSpecies;
 
-    @OneToMany(mappedBy = "club")
-    private List<ShowTable> shows = new ArrayList<>();
+    @Column(name = "fish_count")
+    private String fishCount;
 
-    @OneToMany(mappedBy = "club")
-    private List<Entertain> entertains = new ArrayList<>();
+    @Column(name = "get_date")
+    private String getDate;
 
-    @OneToMany(mappedBy = "club")
-    private List<Recruiting> recruitings = new ArrayList<>();
+    @Column(name = "get_time")
+    private String getTime;
+
+    @Column(name = "date_limit")
+    private String dateLimit;
+
+    @Column(name = "status")
+    private String status;
 }
