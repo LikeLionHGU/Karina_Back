@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "user")
 @Getter
@@ -16,6 +20,13 @@ public class User {
 
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;                         // PK
+
+        @OneToMany(
+                mappedBy = "book",
+                fetch = FetchType.LAZY,
+                cascade = CascadeType.ALL
+        )
+        private List<Article> articles = new ArrayList<>();
 
         @Column(name = "memberClassification")
         private String memberClassification;     // 회원구분
