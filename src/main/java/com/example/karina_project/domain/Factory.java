@@ -1,0 +1,31 @@
+package com.example.karina_project.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Getter @Setter
+@AllArgsConstructor @NoArgsConstructor
+public class Factory {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long num;
+
+    @Column(nullable = false)
+    private String id;
+
+    @Column(name = "secrete_key", nullable = false)
+    private String secreteKey;
+
+    private String name;
+
+    private String address;
+
+    private String pdf;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "factory")
+    private List<Article> articles = new ArrayList<>();
+}
