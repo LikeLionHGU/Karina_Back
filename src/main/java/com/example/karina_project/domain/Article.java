@@ -1,23 +1,24 @@
 package com.example.karina_project.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Getter @Setter
-@AllArgsConstructor @NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Article {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fisher_num", nullable = false)
-    private Fisher fisher;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "factory_num", nullable = false)
-    private Factory factory;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(name = "fish_species")
     private String fishSpecies;
