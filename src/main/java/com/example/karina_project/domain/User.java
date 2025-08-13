@@ -22,7 +22,7 @@ public class User {
         private Long id;                         // PK
 
         @OneToMany(
-                mappedBy = "book",
+                mappedBy = "user",
                 fetch = FetchType.LAZY,
                 cascade = CascadeType.ALL
         )
