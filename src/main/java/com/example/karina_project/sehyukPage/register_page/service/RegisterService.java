@@ -1,0 +1,52 @@
+package com.example.karina_project.sehyukPage.register_page.service;
+
+import com.example.karina_project.domain.User;
+import com.example.karina_project.repository.UserRepository;
+import com.example.karina_project.sehyukPage.register_page.dto.RegisterDto;
+import com.example.karina_project.sehyukPage.register_page.request.RegisterRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class RegisterService {
+
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public String registerProcess(RegisterRequest request, String s3Url) {
+
+        String loginId = request.getLoginId();
+        String password = request.getPassword();
+        String memberClassification = request.getMemberClassification();
+        String name = request.getName();
+        String phoneNumber = request.getPhoneNumber();
+        String mainAddress = request.getMainAddress();
+        String detailAddress = request.getDetailAddress();
+
+        Boolean isExist = userRepository.existsByLoginId(loginId);
+
+        if (isExist) {
+            return "User already exists";
+        }
+
+        User newUser = new User();
+
+        newUser.setLoginId(loginId);
+        newUser.setPassword(bCryptPasswordEncoder.encode(password));
+        newUser.setMemberClassification(memberClassification);
+        newUser.setName(name);
+        newUser.setPhoneNumber(phoneNumber);
+        newUser.setMainAddress(mainAddress);
+        newUser.setDetailAddress(detailAddress);
+        newUser.setAuthenticationFile(s3Url);
+
+       userRepository.save(newUser);
+
+        return "User created";
+    }
+
+
+
+}
