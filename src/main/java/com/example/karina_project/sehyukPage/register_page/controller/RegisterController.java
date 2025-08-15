@@ -1,6 +1,5 @@
 package com.example.karina_project.sehyukPage.register_page.controller;
 
-import com.example.karina_project.sehyukPage.register_page.dto.RegisterDto;
 import com.example.karina_project.sehyukPage.register_page.request.RegisterRequest;
 import com.example.karina_project.sehyukPage.register_page.request.RegisterRequestOnlyId;
 import com.example.karina_project.sehyukPage.register_page.service.FileService;
