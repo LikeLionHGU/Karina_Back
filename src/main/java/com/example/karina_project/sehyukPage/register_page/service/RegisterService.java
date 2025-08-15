@@ -2,8 +2,8 @@ package com.example.karina_project.sehyukPage.register_page.service;
 
 import com.example.karina_project.domain.User;
 import com.example.karina_project.repository.UserRepository;
-import com.example.karina_project.sehyukPage.register_page.dto.RegisterDto;
 import com.example.karina_project.sehyukPage.register_page.request.RegisterRequest;
+import com.example.karina_project.sehyukPage.register_page.request.RegisterRequestOnlyId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -45,6 +45,17 @@ public class RegisterService {
        userRepository.save(newUser);
 
         return "User created";
+    }
+
+    public String IdValidation(RegisterRequestOnlyId request) {
+
+        Boolean isExit = userRepository.existsByLoginId(request.getLoginId());
+
+        if(isExit){
+            return "Invalid Id";
+        }
+
+        return "Valid Id";
     }
 
 

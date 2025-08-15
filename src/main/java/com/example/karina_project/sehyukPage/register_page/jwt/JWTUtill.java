@@ -30,11 +30,6 @@ public class JWTUtill {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("memberClassification", String.class);
     }
 
-    public String getPassword(String token) {
-
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("password", String.class);
-    }
-
     public Boolean isExpired(String token) {
 
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());

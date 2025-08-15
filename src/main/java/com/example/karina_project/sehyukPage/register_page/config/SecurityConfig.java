@@ -70,7 +70,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/register").permitAll()
+                        .requestMatchers("/login", "/", "user/register", "user/register/id_validation").permitAll()
                         .anyRequest().authenticated());
 
         http
