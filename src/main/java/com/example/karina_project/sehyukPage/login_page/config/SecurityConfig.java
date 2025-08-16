@@ -1,4 +1,4 @@
-package com.example.karina_project.sehyukPage.register_page.config;
+package com.example.karina_project.sehyukPage.login_page.config;
 
 import com.example.karina_project.sehyukPage.login_page.jwt.JWTFilter;
 import com.example.karina_project.sehyukPage.login_page.jwt.JWTUtill;
@@ -54,6 +54,7 @@ public class SecurityConfig {
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
                         configuration.setMaxAge(3600L);
+                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
 
                         return configuration;
                     }
@@ -70,15 +71,21 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "user/register", "user/register/id_validation").permitAll()
+                        .requestMatchers("/", "/user/**").permitAll()
+                        .requestMatchers("/fisher/**").hasAnyAuthority("fisher", "admin")
+                        .requestMatchers("/factory/**").hasAnyAuthority("factory", "admin")
                         .anyRequest().authenticated());
 
         http
                 .addFilterBefore(new JWTFilter(jwtUtill), UsernamePasswordAuthenticationFilter.class);
 
+        LoginFilter loginFilter = new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtill);
+        loginFilter.setFilterProcessesUrl("/user/login");
+        loginFilter.setUsernameParameter("loginId");
+
         //AuthenticationManager()와 JWTUtil 인수 전달
         http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtill), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class);
 
         http
                 .sessionManagement((session) -> session

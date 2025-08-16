@@ -15,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/fisher")
 public class FisherMypageController {
 
     private final FisherMypageService fisherMypageService;

@@ -1,13 +1,11 @@
 package com.example.karina_project.sehyukPage.login_page;
 
-import com.example.karina_project.sehyukPage.login_page.request.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Collection;
@@ -17,6 +15,7 @@ import java.util.Iterator;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class LoginController {
+
     @GetMapping("/")
     public String mainP() {
 
@@ -31,9 +30,4 @@ public class LoginController {
 
         return "Login Controller" + username + role;
     }
-
-//    @PostMapping("/login")
-//    public String login(LoginRequest loginRequest) {
-//
-//    }
 }
