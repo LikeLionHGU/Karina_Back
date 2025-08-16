@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class RegisterDto {
     private String memberClassification;
-    private String loginId;
+    private String login_id;
     private String password;
     private String name;
     private String phoneNumber;
