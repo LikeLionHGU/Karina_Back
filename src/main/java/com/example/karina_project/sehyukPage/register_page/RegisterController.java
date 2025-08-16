@@ -1,4 +1,4 @@
-package com.example.karina_project.sehyukPage.register_page;
+package com.example.karina_project.sehyukPage.register_page.controller;
 
 import com.example.karina_project.sehyukPage.register_page.request.RegisterRequest;
 import com.example.karina_project.sehyukPage.register_page.request.RegisterRequestOnlyId;

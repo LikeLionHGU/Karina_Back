@@ -24,5 +24,4 @@ public class RegisterRequest {
         this.mainAddress = mainAddress;
         this.detailAddress = detailAddress;
     }
-
 }
