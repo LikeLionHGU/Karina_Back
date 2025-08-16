@@ -23,7 +23,7 @@ public class RegisterController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestPart("user") RegisterRequest registerRequest, @RequestPart("file") MultipartFile file) throws IOException {
-        String s3Url = fileService.uploadFile(file, "fisher/");
+        String s3Url = fileService.uploadFile(file, "verification/");
         String message = registerService.registerProcess(registerRequest, s3Url);
 
         return ResponseEntity.ok().body(message);
