@@ -35,6 +35,12 @@ public class Article {
     @Column(name = "date_limit")
     private String dateLimit;
 
+    @Column(name = "post_time")
+    private String postTime;
+
     @Column(name = "status")
     private String status;
+
+    @Column(name = "thumbnail")
+    private String thumbnail;
 }
