@@ -13,23 +13,24 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/factory")
 public class FactoryMypageController {
 
     private final FactoryMypageService factoryMypageService;
 
 
     // 공장 마이페이지 컨트롤러
-    @GetMapping("/factory/mypage/{userId}")
+    @GetMapping("/mypage/{userId}")
     public ResponseEntity<List<GetFactoryMyPageResponse>> getUserArticles(@PathVariable Long userId) {
         return ResponseEntity.ok(factoryMypageService.getUserArticles(userId));
     }
 
-    @GetMapping("/factory/mypage/profile/{userId}")
+    @GetMapping("/mypage/profile/{userId}")
     public ResponseEntity<GetFactoryMyPageProfileResponse> getUserProfileArticles(@PathVariable Long userId) {
         return ResponseEntity.ok(factoryMypageService.getUserProfileArticles(userId));
     }
 
-    @PutMapping("/factory/mypage/profile/{userId}")
+    @PutMapping("/mypage/profile/{userId}")
     public ResponseEntity<?> putUserProfileArticles(@RequestBody PutFactoryMyPageProfileRequest putFactoryMyPageProfileRequest
     , @PathVariable Long userId) {
         boolean success = factoryMypageService.putUserProfileArticles(putFactoryMyPageProfileRequest, userId);
