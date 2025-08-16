@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/karina?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: qudcks123@
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    # ← 이 옵션은 hibernate 하위가 아니라 jpa 바로 아래에 둡니다.
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        show_sql: true          # show-sql(X) → show_sql(O)
+        format_sql: true
+        use_sql_comments: true
+        # (선택) Dialect 강제 지정: 연결은 되는데 여전히 Dialect 오류가 나면 아래 주석을 해제하세요.
+        # dialect: org.hibernate.dialect.MySQLDialect
