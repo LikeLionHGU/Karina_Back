@@ -1,4 +1,4 @@
-package com.example.karina_project.sehyukPage.register_page;
+package com.example.karina_project.sehyukPage.login_page.domain;
 
 import com.example.karina_project.domain.User;
 import lombok.RequiredArgsConstructor;

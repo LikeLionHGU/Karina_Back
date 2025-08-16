@@ -1,6 +1,6 @@
-package com.example.karina_project.sehyukPage.register_page.jwt;
+package com.example.karina_project.sehyukPage.login_page.jwt;
 
-import com.example.karina_project.sehyukPage.register_page.CustomUserDetail;
+import com.example.karina_project.sehyukPage.login_page.domain.CustomUserDetail;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

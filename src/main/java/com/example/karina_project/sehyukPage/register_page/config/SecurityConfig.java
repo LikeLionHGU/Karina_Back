@@ -1,8 +1,8 @@
 package com.example.karina_project.sehyukPage.register_page.config;
 
-import com.example.karina_project.sehyukPage.register_page.jwt.JWTFilter;
-import com.example.karina_project.sehyukPage.register_page.jwt.JWTUtill;
-import com.example.karina_project.sehyukPage.register_page.jwt.LoginFilter;
+import com.example.karina_project.sehyukPage.login_page.jwt.JWTFilter;
+import com.example.karina_project.sehyukPage.login_page.jwt.JWTUtill;
+import com.example.karina_project.sehyukPage.login_page.jwt.LoginFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

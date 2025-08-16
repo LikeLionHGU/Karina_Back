@@ -1,4 +1,4 @@
-package com.example.karina_project.sehyukPage.register_page.jwt;
+package com.example.karina_project.sehyukPage.login_page.jwt;
 
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
