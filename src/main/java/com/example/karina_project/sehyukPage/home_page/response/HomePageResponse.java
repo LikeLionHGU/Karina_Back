@@ -3,7 +3,6 @@ package com.example.karina_project.sehyukPage.home_page.response;
 import com.example.karina_project.sehyukPage.home_page.dto.ArticleDto;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @Builder
-public class FisherResponse {
+public class HomePageResponse {
 
     private Long article_id;
     private Long user_id;
@@ -21,8 +20,8 @@ public class FisherResponse {
     private String status;
 //    private String image;
 
-    public static FisherResponse from(ArticleDto articleDto) {
-        return FisherResponse.builder()
+    public static HomePageResponse from(ArticleDto articleDto) {
+        return HomePageResponse.builder()
                 .article_id(articleDto.getArticle_id())
                 .user_id(articleDto.getUser_id())
                 .fisher_name(articleDto.getFisher_name())
@@ -31,7 +30,7 @@ public class FisherResponse {
                 .build();
     }
 
-    public static List<FisherResponse> from(List<ArticleDto> articleDtos) {
-        return articleDtos.stream().map(FisherResponse::from).collect(Collectors.toList());
+    public static List<HomePageResponse> from(List<ArticleDto> articleDtos) {
+        return articleDtos.stream().map(HomePageResponse::from).collect(Collectors.toList());
     }
 }
