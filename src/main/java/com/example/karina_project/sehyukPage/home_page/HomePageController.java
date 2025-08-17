@@ -1,12 +1,12 @@
 package com.example.karina_project.sehyukPage.home_page;
 
-import com.example.karina_project.sehyukPage.home_page.response.FisherResponse;
-import com.example.karina_project.sehyukPage.home_page.service.FisherService;
+import com.example.karina_project.sehyukPage.home_page.response.HomePageResponse;
+import com.example.karina_project.sehyukPage.home_page.service.HomePageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,18 +15,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class HomePageController {
 
-    private final FisherService fisherService;
+    private final HomePageService homePageService;
 
-    @GetMapping("/fisher/home")
-    public ResponseEntity<List<FisherResponse>> fisher_home() {
-         List<FisherResponse> fisherResponses = fisherService.getArticlesByTime().stream().map(FisherResponse::from).collect(Collectors.toList());
+    @GetMapping({"/fisher/home", "/factory/home"})
+    public ResponseEntity<List<HomePageResponse>> home_page() {
+         List<HomePageResponse> homePageResponses = homePageService.getArticlesByTime().stream().map(HomePageResponse::from).collect(Collectors.toList());
 
-         return ResponseEntity.ok(fisherResponses);
+         return ResponseEntity.ok(homePageResponses);
     }
 
-//    @GetMapping("/factory/home")
-//    public ResponseEntity<FisherResponse> factory_home() {
-//
-//    }
+    @GetMapping({"/fisher/search", "/factory/search"})
+    public ResponseEntity<List<HomePageResponse>> search(@RequestParam("fish_species") String fish_species) {
+        List<HomePageResponse> homePageResponses = homePageService.getArticlesByFishSpecies(fish_species).stream().map(HomePageResponse::from).collect(Collectors.toList());
+
+        return ResponseEntity.ok(homePageResponses);
+    }
 
 }
