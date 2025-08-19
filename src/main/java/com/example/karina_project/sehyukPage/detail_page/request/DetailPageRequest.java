@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DetailPageRequest {
 
-    private Long user_id;
+    private Long factory_id;
     private Long article_id;
 
 }
