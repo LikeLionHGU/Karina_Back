@@ -6,10 +6,7 @@ import com.example.karina_project.sehyukPage.detail_page.service.DetailPageServi
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,9 +15,9 @@ public class DetailPageController {
 
     private final DetailPageService detailPageService;
 
-    @GetMapping("/detail")
-    public ResponseEntity<DetailPageResponse> getDetailPage(@RequestBody DetailPageRequest request) {
-        DetailPageResponse detailPageResponse = DetailPageResponse.from(detailPageService.getDetailArticleInfo(request));
+    @GetMapping("/detail/{article_id}")
+    public ResponseEntity<DetailPageResponse> getDetailPage(@PathVariable Long article_id) {
+        DetailPageResponse detailPageResponse = DetailPageResponse.from(detailPageService.getDetailArticleInfo(article_id));
 
         return ResponseEntity.ok().body(detailPageResponse);
     }

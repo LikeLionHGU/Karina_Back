@@ -3,9 +3,6 @@ package com.example.karina_project.sehyukPage.detail_page.dto;
 import com.example.karina_project.domain.Article;
 import lombok.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Getter
 @Setter
 @Builder
