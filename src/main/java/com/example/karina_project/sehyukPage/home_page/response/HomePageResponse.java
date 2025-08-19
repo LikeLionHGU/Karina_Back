@@ -18,7 +18,7 @@ public class HomePageResponse {
     private String fisher_name;
     private String fish_species;
     private String status;
-//    private String image;
+    private String thumbnail;
 
     public static HomePageResponse from(ArticleDto articleDto) {
         return HomePageResponse.builder()
@@ -27,6 +27,7 @@ public class HomePageResponse {
                 .fisher_name(articleDto.getFisher_name())
                 .fish_species(articleDto.getFish_species())
                 .status(articleDto.getStatus())
+                .thumbnail(articleDto.getThumbnail())
                 .build();
     }
 
