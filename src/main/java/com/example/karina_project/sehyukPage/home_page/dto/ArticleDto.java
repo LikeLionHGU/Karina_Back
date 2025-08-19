@@ -23,7 +23,7 @@ public class ArticleDto {
     private String dateLimit;
     private String postTime;
     private String status;
-private String thumbnail;
+    private String thumbnail;
 
     public static ArticleDto from(Article article) {
         return ArticleDto.builder()

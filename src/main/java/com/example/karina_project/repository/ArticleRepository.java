@@ -22,11 +22,14 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("SELECT a FROM Article a JOIN FETCH a.user WHERE a.status <> :status ORDER BY a.postTime DESC")
     List<Article> findArticlesByStatusNotContainsKeywordWithPostTimeDesc(@Param("status") String status, Pageable pageable);
 
-    @Query("SELECT a FROM Article a JOIN FETCH a.user WHERE a.status <> :status AND a.fishSpecies like :fishSpecies ORDER BY a.postTime DESC")
+    @Query("SELECT a FROM Article a JOIN FETCH a.user WHERE a.status <> :status AND a.fishSpecies LIKE :fishSpecies ORDER BY a.postTime DESC")
     List<Article> findArticlesByStatusNotContainsKeywordAndContainFishSpeciesWithPostTimeDesc(
             @Param("status") String status,
             @Param("fishSpecies") String fishSpecies,
             Pageable pageable
     );
+
+    @Query("SELECT a FROM Article a JOIN FETCH a.user WHERE a.id = :id")
+    Optional<Article> findByIdWithUser(@Param("id") Long id);
 }
 

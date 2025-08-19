@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -19,6 +22,13 @@ public class Article {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToMany(
+            mappedBy = "article",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
+    private List<Matching> matchings = new ArrayList<>();
 
     @Column(name = "fish_species")
     private String fishSpecies;
