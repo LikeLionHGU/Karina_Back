@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +34,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         if (!passwordEncoder.matches(password, customUserDetail.getPassword())) {
             throw new BadCredentialsException("Invalid password");
+        }
+
+        boolean AdminUser = customUserDetail.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+
+        if(AdminUser) {
+            return new CustomAuthenticationToken(customUserDetail, null, customUserDetail.getAuthorities());
         }
 
         String role = "ROLE_" + rawMRole.toUpperCase();
