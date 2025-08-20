@@ -53,4 +53,7 @@ public class Article {
 
     @Column(name = "thumbnail")
     private String thumbnail;
+
+    @Column(name = "video")
+    private String video;
 }

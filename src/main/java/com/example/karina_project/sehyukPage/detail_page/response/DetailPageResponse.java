@@ -23,6 +23,7 @@ public class DetailPageResponse {
     private String get_time;
     private String date_limit;
     private String status;
+    private String video;
 
     public static DetailPageResponse from(DetailPageDto detailPageDto) {
         return DetailPageResponse.builder()
@@ -36,6 +37,7 @@ public class DetailPageResponse {
                 .get_time(detailPageDto.getGet_time())
                 .date_limit(detailPageDto.getDate_limit())
                 .status(detailPageDto.getStatus())
+                .video(detailPageDto.getVideo())
                 .build();
     }
 

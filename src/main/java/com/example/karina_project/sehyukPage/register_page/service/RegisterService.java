@@ -19,7 +19,7 @@ public class RegisterService {
 
         String loginId = request.getLoginId();
         String password = request.getPassword();
-        String memberClassification = request.getMemberClassification();
+        String rawRole = request.getRole();
         String name = request.getName();
         String phoneNumber = request.getPhoneNumber();
         String mainAddress = request.getMainAddress();
@@ -31,11 +31,13 @@ public class RegisterService {
             return "User already exists";
         }
 
+        String role = "ROLE_" + rawRole.toUpperCase();
+
         User newUser = new User();
 
         newUser.setLoginId(loginId);
         newUser.setPassword(bCryptPasswordEncoder.encode(password));
-        newUser.setMemberClassification(memberClassification);
+        newUser.setRole(role);
         newUser.setName(name);
         newUser.setPhoneNumber(phoneNumber);
         newUser.setMainAddress(mainAddress);

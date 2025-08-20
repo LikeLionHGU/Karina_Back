@@ -28,8 +28,8 @@ public class User {
         )
         private List<Article> articles = new ArrayList<>();
 
-        @Column(name = "memberClassification")
-        private String memberClassification;     // 회원구분
+        @Column(name = "role")
+        private String role;     // 회원구분
 
         @Column(name = "authenticationFile")
         private String authenticationFile;       // 회원인증

@@ -72,8 +72,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/", "/user/**").permitAll()
-                        .requestMatchers("/fisher/**").hasAnyAuthority("fisher", "admin")
-                        .requestMatchers("/factory/**").hasAnyAuthority("factory", "admin")
+                        .requestMatchers("/fisher/**").hasAnyAuthority("ROLE_FISHER", "ROLE_ADMIN")
+                        .requestMatchers("/factory/**").hasAnyAuthority("ROLE_FACTORY", "ROLE_ADMIN")
                         .anyRequest().authenticated());
 
         http

@@ -1,7 +1,7 @@
 package com.example.karina_project.sehyukPage.login_page.jwt;
 
 import com.example.karina_project.domain.User;
-import com.example.karina_project.sehyukPage.login_page.domain.CustomUserDetail;
+import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,7 +45,7 @@ public class JWTFilter extends OncePerRequestFilter {
 
         User user = new User();
         user.setLoginId(username);
-        user.setMemberClassification(role);
+        user.setRole(role);
 
         CustomUserDetail customUserDetails = new CustomUserDetail(user);
 

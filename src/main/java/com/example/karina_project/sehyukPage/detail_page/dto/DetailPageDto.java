@@ -22,6 +22,7 @@ public class DetailPageDto {
     private String get_time;
     private String date_limit;
     private String status;
+    private String video;
 
     public static DetailPageDto from(Article article) {
         return DetailPageDto.builder()
@@ -37,6 +38,7 @@ public class DetailPageDto {
                 .get_time(article.getGetTime())
                 .date_limit(article.getDateLimit())
                 .status(article.getStatus())
+                .video(article.getVideo())
                 .build();
     }
 }

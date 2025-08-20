@@ -1,4 +1,4 @@
-package com.example.karina_project.sehyukPage.login_page.domain;
+package com.example.karina_project.sehyukPage.login_page;
 
 import com.example.karina_project.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class CustomUserDetail implements UserDetails {
         authorities.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return user.getMemberClassification();
+                return user.getRole();
             }
         });
 
@@ -37,7 +37,6 @@ public class CustomUserDetail implements UserDetails {
         return user.getLoginId();
     }
 
-    // 밑의 함수들은 정의를 하지 않으면 자동으로 true로 처리됨.
     @Override
     public boolean isAccountNonExpired() {
         return true;
