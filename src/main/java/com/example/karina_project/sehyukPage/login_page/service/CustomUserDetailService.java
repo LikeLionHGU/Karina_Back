@@ -2,7 +2,7 @@ package com.example.karina_project.sehyukPage.login_page.service;
 
 import com.example.karina_project.domain.User;
 import com.example.karina_project.repository.UserRepository;
-import com.example.karina_project.sehyukPage.login_page.domain.CustomUserDetail;
+import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
