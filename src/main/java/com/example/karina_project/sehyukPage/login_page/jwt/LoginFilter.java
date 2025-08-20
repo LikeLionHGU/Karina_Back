@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
@@ -46,8 +47,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         GrantedAuthority auth = iterator.next();
 
         String role = auth.getAuthority();
-
-        String token = jwtUtill.createJwt(username, role, 600*600*10*2L);
+        long HoursInMillis = TimeUnit.HOURS.toMillis(2);
+        String token = jwtUtill.createJwt(username, role, HoursInMillis);
 
         response.addHeader("Authorization", "Bearer " + token);
     }
