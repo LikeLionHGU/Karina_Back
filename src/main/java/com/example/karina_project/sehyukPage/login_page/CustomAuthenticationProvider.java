@@ -35,6 +35,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("Invalid password");
         }
 
+        boolean AdminUser = customUserDetail.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+
+        if(AdminUser) {
+            return new CustomAuthenticationToken(customUserDetail, null, customUserDetail.getAuthorities());
+        }
+
         String role = "ROLE_" + rawMRole.toUpperCase();
 
         boolean isClassificationValid = customUserDetail.getAuthorities().stream()
