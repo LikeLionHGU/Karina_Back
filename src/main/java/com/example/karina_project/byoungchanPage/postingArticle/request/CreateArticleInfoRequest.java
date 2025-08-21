@@ -9,6 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreateArticleInfoRequest {
 
+    private Long article_id;
     private String getDate;
     private String getTime;
     private String dateLimit;

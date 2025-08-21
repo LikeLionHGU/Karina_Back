@@ -22,6 +22,8 @@ public class Matching {
     @JoinColumn(name = "article_id", nullable = false)
     private Article article;
 
+    @Column(name = "request_date")
+    private String requestDate;
 
     public static Matching from(Article article, Long factory_id) {
         return Matching.builder()
