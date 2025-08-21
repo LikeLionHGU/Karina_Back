@@ -36,8 +36,6 @@ public class FisherMypageService {
                 .map(GetFisherMyPageResponse::from)
                 .toList();
 
-
-
     }
 
     //@PutMapping("/mypage/{articleId}")
