@@ -5,9 +5,11 @@ import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisher
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageArticleResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageInfoResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageResponse;
+import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import io.jsonwebtoken.security.RsaPrivateJwk;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,9 +22,9 @@ public class FisherMypageController {
 
     private final FisherMypageService fisherMypageService;
 
-    @GetMapping("/mypage/{userId}")
-    public ResponseEntity<List<GetFisherMyPageResponse>> getFisherMypage(@PathVariable Long userId){
-        return ResponseEntity.ok(fisherMypageService.getFisherMypageServiece(userId));
+    @GetMapping("/mypage")
+    public ResponseEntity<List<GetFisherMyPageResponse>> getFisherMypage(@AuthenticationPrincipal CustomUserDetail user) {
+        return ResponseEntity.ok(fisherMypageService.getFisherMypageServiece(user.getId()));
     }
 
     @PutMapping("/mypage/{articleId}")
@@ -31,9 +33,10 @@ public class FisherMypageController {
         return ResponseEntity.ok().body(Map.of("success", success));
     }
 
-    @GetMapping("/mypage/article/{userId}")
-    public ResponseEntity<List<GetFisherMyPageArticleResponse>> getfisherMypageArticle(@PathVariable Long userId){
-        return ResponseEntity.ok(fisherMypageService.getFisherMypageArticleServiece(userId));
+    @GetMapping("/mypage/article")
+    public ResponseEntity<List<GetFisherMyPageArticleResponse>> getFisherMypageArticle(
+            @AuthenticationPrincipal CustomUserDetail user) {
+        return ResponseEntity.ok(fisherMypageService.getFisherMypageArticleServiece(user.getId()));
     }
 
     @PutMapping("/mypage/article/{articleId}")
@@ -42,14 +45,22 @@ public class FisherMypageController {
         return ResponseEntity.ok().body(Map.of("success", success));
     }
 
-    @GetMapping("/mypage/profile/{userId}")
-    public ResponseEntity<GetFisherMyPageInfoResponse> getFisherMypageInfo(@PathVariable Long userId){
-        return ResponseEntity.ok(fisherMypageService.getFisherMypageInfo(userId));
+    @GetMapping("/mypage/profile")
+    public ResponseEntity<GetFisherMyPageInfoResponse> getFisherMypageInfo(
+            @AuthenticationPrincipal CustomUserDetail user) {
+        return ResponseEntity.ok(fisherMypageService.getFisherMypageInfo(user.getId()));
     }
 
-    @PutMapping("/mypage/profile/{userId}")
-    public ResponseEntity<?> EditFisherMyPageInfo(@RequestBody PutFisherMyPageInfoRequest putFisherMyPageInfoRequest, @PathVariable Long userId){
-        boolean success = fisherMypageService.editFisherMyPageInfoService(putFisherMyPageInfoRequest, userId);
-        return ResponseEntity.ok().body(Map.of("success", success));
+    @PutMapping("/mypage/profile")
+    public ResponseEntity<?> editFisherMyPageInfo(
+            @RequestBody PutFisherMyPageInfoRequest putFisherMyPageInfoRequest,
+            @AuthenticationPrincipal CustomUserDetail user) {
+
+        boolean success = fisherMypageService.editFisherMyPageInfoService(
+                putFisherMyPageInfoRequest,
+                user.getId()
+        );
+
+        return ResponseEntity.ok(Map.of("success", success));
     }
 }

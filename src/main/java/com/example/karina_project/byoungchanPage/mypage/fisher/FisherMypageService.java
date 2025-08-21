@@ -28,7 +28,7 @@ public class FisherMypageService {
     private final UserRepository userRepository;
 
 
-    //@GetMapping("/mypage/{userId}")
+    //@GetMapping("/mypage")
     @Transactional(readOnly = true) // ← 이 한 줄이 핵심!
     public List<GetFisherMyPageResponse> getFisherMypageServiece(Long userId) {
         return articleRepository.findByUserIdOrderByIdDesc(userId)
@@ -47,7 +47,7 @@ public class FisherMypageService {
 
     }
 
-    //@GetMapping("/mypage/article/{userId}")
+    //@GetMapping("/mypage/article")
     @Transactional(readOnly = true) // ← 이 한 줄
     public List<GetFisherMyPageArticleResponse> getFisherMypageArticleServiece(Long userId) {
         return articleRepository.findByUserIdOrderByIdDesc(userId)
@@ -71,23 +71,27 @@ public class FisherMypageService {
         return true;
     }
 
-    //@GetMapping("/mypage/profile/{userId}")
+    //@GetMapping("/mypage/profile")
     public GetFisherMyPageInfoResponse getFisherMypageInfo(Long userId) {
         return userRepository.findById(userId)
                 .map(GetFisherMyPageInfoResponse::from)
                 .orElseThrow(() -> new EntityNotFoundException("유저가 없습니다. id=" + userId));
     }
 
-    //@PutMapping("/mypage/profile/{userId}")
-    public boolean editFisherMyPageInfoService(@RequestBody PutFisherMyPageInfoRequest putFisherMyPageInfoRequest, @PathVariable Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("해당 유저가 없습니다. id=" + userId));
+    //@PutMapping("/mypage/profile")
+    @Transactional
+    public boolean editFisherMyPageInfoService(PutFisherMyPageInfoRequest putFisherMyPageInfoRequest, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 유저가 없습니다. id=" + userId));
+
         user.setLoginId(putFisherMyPageInfoRequest.getLoginId());
         user.setPassword(putFisherMyPageInfoRequest.getPassword());
         user.setPhoneNumber(putFisherMyPageInfoRequest.getPhoneNumber());
         user.setMainAddress(putFisherMyPageInfoRequest.getMainAddress());
         user.setDetailAddress(putFisherMyPageInfoRequest.getDetailAddress());
+
         userRepository.save(user);
         return true;
-
     }
+
 }

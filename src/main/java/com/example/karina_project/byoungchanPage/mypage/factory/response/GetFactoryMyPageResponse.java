@@ -6,13 +6,16 @@ import com.example.karina_project.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import software.amazon.awssdk.services.s3.endpoints.internal.Value;
+
+import java.util.Map;
 
 @Getter
 @Setter
 @Builder
 public class GetFactoryMyPageResponse {
     private String loginId;
-    private String fishSpecies;
+    private Map<String, Integer> fishInfo;
     private String getDate;
     private String getTime;
     private String dateLimit;
@@ -21,7 +24,7 @@ public class GetFactoryMyPageResponse {
     public static GetFactoryMyPageResponse from(Article article) {
         return GetFactoryMyPageResponse.builder()
                 .loginId(article.getUser() != null ? article.getUser().getLoginId() : null)
-                .fishSpecies(article.getFishSpecies())
+                .fishInfo(article.getFishInfo())
                 .getDate(article.getGetDate())
                 .getTime(article.getGetTime())
                 .dateLimit(article.getDateLimit())
