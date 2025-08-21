@@ -3,6 +3,8 @@ package com.example.karina_project.sehyukPage.detail_page.dto;
 import com.example.karina_project.domain.Article;
 import lombok.*;
 
+import java.util.Map;
+
 @Getter
 @Setter
 @Builder
@@ -10,33 +12,29 @@ import lombok.*;
 @NoArgsConstructor
 public class DetailPageDto {
 
-    private Long article_id;
-    private Long user_id;
-    private String fisher_name;
-    private String phone_number;
-    private String main_address;
-    private String detail_address;
-    private String fish_species;
-    private String fish_count;
-    private String get_date;
-    private String get_time;
-    private String date_limit;
+    private Long articleId;
+    private String fisherName;
+    private String phoneNumber;
+    private String mainAddress;
+    private String detailAddress;
+    private Map<String, Integer> fishInfo;
+    private String getDate;
+    private String getTime;
+    private String dateLimit;
     private String status;
     private String video;
 
     public static DetailPageDto from(Article article) {
         return DetailPageDto.builder()
-                .article_id(article.getId())
-                .user_id(article.getUser().getId())
-                .fisher_name(article.getUser().getName())
-                .phone_number(article.getUser().getPhoneNumber())
-                .main_address(article.getUser().getMainAddress())
-                .detail_address(article.getUser().getDetailAddress())
-                .fish_species(article.getFishSpecies())
-                .fish_count(article.getFishCount())
-                .get_date(article.getGetDate())
-                .get_time(article.getGetTime())
-                .date_limit(article.getDateLimit())
+                .articleId(article.getId())
+                .fisherName(article.getUser().getName())
+                .phoneNumber(article.getUser().getPhoneNumber())
+                .mainAddress(article.getUser().getMainAddress())
+                .detailAddress(article.getUser().getDetailAddress())
+                .fishInfo(article.getFishInfo())
+                .getDate(article.getGetDate())
+                .getTime(article.getGetTime())
+                .dateLimit(article.getDateLimit())
                 .status(article.getStatus())
                 .video(article.getVideo())
                 .build();

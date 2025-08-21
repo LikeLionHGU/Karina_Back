@@ -4,6 +4,7 @@ import com.example.karina_project.domain.Article;
 import lombok.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Getter
@@ -13,11 +14,10 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class ArticleDto {
 
-    private Long article_id;
-    private Long user_id;
-    private String fisher_name;
-    private String fish_species;
-    private String fishCount;
+    private Long articleId;
+    private Long userId;
+    private String fisherName;
+    private Map<String, Integer> fishInfo;
     private String getDate;
     private String getTime;
     private String dateLimit;
@@ -27,10 +27,9 @@ public class ArticleDto {
 
     public static ArticleDto from(Article article) {
         return ArticleDto.builder()
-                .article_id(article.getId())
-                .user_id(article.getUser().getId())
-                .fisher_name(article.getUser().getName())
-                .fish_species(article.getFishSpecies())
+                .articleId(article.getId())
+                .fisherName(article.getUser().getName())
+                .fishInfo(article.getFishInfo())
                 .postTime(article.getPostTime())
                 .status(article.getStatus())
                 .thumbnail(article.getThumbnail())

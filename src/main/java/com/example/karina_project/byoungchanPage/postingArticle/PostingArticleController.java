@@ -2,12 +2,12 @@ package com.example.karina_project.byoungchanPage.postingArticle;
 
 import com.example.karina_project.byoungchanPage.postingArticle.request.CreateArticleInfoRequest;
 import com.example.karina_project.byoungchanPage.postingArticle.request.EditFishInfoRequest;
-import com.example.karina_project.byoungchanPage.postingArticle.request.PostVideoRequest;
 import com.example.karina_project.byoungchanPage.postingArticle.response.VideoResultResponse;
 import com.example.karina_project.sehyukPage.register_page.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,10 +21,10 @@ public class PostingArticleController {
     private final FileService fileService;
     private final PostingArticleService postingArticleService;
 
-    @PostMapping("/post/upload/{userId}")
-    public ResponseEntity<VideoResultResponse> postUpload(@RequestPart("info")PostVideoRequest request, @RequestPart("video") MultipartFile video) throws IOException {
+    @PostMapping("/post/upload")
+    public ResponseEntity<VideoResultResponse> postUpload(@RequestPart("video") MultipartFile video, Authentication authentication) throws IOException {
         String s3Url = fileService.uploadFile(video, "video/");
-        VideoResultResponse result = postingArticleService.makeArticle(request.getUser_id(), s3Url);
+        VideoResultResponse result = postingArticleService.makeArticle(authentication, s3Url);
         return ResponseEntity.ok().body(result);
     }
 

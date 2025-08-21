@@ -25,8 +25,8 @@ public class HomePageController {
     }
 
     @GetMapping({"/fisher/search", "/factory/search"})
-    public ResponseEntity<List<HomePageResponse>> search(@RequestParam("fish_species") String fish_species) {
-        List<HomePageResponse> homePageResponses = homePageService.getArticlesByFishSpecies(fish_species).stream().map(HomePageResponse::from).collect(Collectors.toList());
+    public ResponseEntity<List<HomePageResponse>> search(@RequestParam("fishSpecies") String fishSpecies) {
+        List<HomePageResponse> homePageResponses = homePageService.getArticlesByFishSpecies(fishSpecies).stream().map(HomePageResponse::from).collect(Collectors.toList());
 
         return ResponseEntity.ok(homePageResponses);
     }

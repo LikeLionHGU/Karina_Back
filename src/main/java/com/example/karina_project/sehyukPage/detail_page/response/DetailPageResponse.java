@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Getter
@@ -13,29 +14,29 @@ import java.util.stream.Collectors;
 @Builder
 public class DetailPageResponse {
 
-    private Long article_id;
-    private String fisher_name;
-    private String phone_number;
-    private String address;
-    private String fish_species;
-    private String fish_count;
-    private String get_date;
-    private String get_time;
-    private String date_limit;
+    private Long articleId;
+    private String fisherName;
+    private String phoneNumber;
+    private String mainAddress;
+    private String detailAddress;
+    private Map<String, Integer> fishInfo;
+    private String getDate;
+    private String getTime;
+    private String dateLimit;
     private String status;
     private String video;
 
     public static DetailPageResponse from(DetailPageDto detailPageDto) {
         return DetailPageResponse.builder()
-                .article_id(detailPageDto.getArticle_id())
-                .fisher_name(detailPageDto.getFisher_name())
-                .phone_number(detailPageDto.getPhone_number())
-                .address(detailPageDto.getDetail_address())
-                .fish_species(detailPageDto.getFish_species())
-                .fish_count(detailPageDto.getFish_count())
-                .get_date(detailPageDto.getGet_date())
-                .get_time(detailPageDto.getGet_time())
-                .date_limit(detailPageDto.getDate_limit())
+                .articleId(detailPageDto.getArticleId())
+                .fisherName(detailPageDto.getFisherName())
+                .phoneNumber(detailPageDto.getPhoneNumber())
+                .mainAddress(detailPageDto.getMainAddress())
+                .detailAddress(detailPageDto.getDetailAddress())
+                .fishInfo(detailPageDto.getFishInfo())
+                .getDate(detailPageDto.getGetDate())
+                .getTime(detailPageDto.getGetTime())
+                .dateLimit(detailPageDto.getDateLimit())
                 .status(detailPageDto.getStatus())
                 .video(detailPageDto.getVideo())
                 .build();

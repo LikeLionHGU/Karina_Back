@@ -9,5 +9,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class EditFishInfoRequest {
 
-    private Long article_id;
+    private Long articleId;
 }
