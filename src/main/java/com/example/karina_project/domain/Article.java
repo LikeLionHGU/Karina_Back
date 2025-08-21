@@ -1,5 +1,6 @@
 package com.example.karina_project.domain;
 
+import com.example.karina_project.byoungchanPage.postingArticle.converter.FishInfoConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -30,11 +32,9 @@ public class Article {
     )
     private List<Matching> matchings = new ArrayList<>();
 
-    @Column(name = "fish_species")
-    private String fishSpecies;
-
-    @Column(name = "fish_count")
-    private String fishCount;
+    @Convert(converter = FishInfoConverter.class)
+    @Column(name = "fish_info")
+    private Map<String, Integer> fishInfo;
 
     @Column(name = "get_date")
     private String getDate;

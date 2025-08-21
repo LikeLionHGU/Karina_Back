@@ -7,10 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+public class PostVideoRequest {
 
-public class CreateFishInfoRequest {
-    private String getDate;
-    private String getTime;
-    private String dateLimit;
+    private Long user_id;
 
 }
