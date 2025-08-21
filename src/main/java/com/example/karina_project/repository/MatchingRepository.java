@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MatchingRepository extends JpaRepository<Matching, Long> {
-    Matching findByArticleIdAndFactoryId(Long articleId, Long factoryId);
+    Matching findByArticleIdAndFactoryId(Long articleId, String factoryId);
 }

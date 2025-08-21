@@ -5,6 +5,7 @@ import com.example.karina_project.sehyukPage.detail_page.response.DetailPageResp
 import com.example.karina_project.sehyukPage.detail_page.service.DetailPageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,16 +16,16 @@ public class DetailPageController {
 
     private final DetailPageService detailPageService;
 
-    @GetMapping("/detail/{article_id}")
-    public ResponseEntity<DetailPageResponse> getDetailPage(@PathVariable Long article_id) {
-        DetailPageResponse detailPageResponse = DetailPageResponse.from(detailPageService.getDetailArticleInfo(article_id));
+    @GetMapping("/detail/{articleId}")
+    public ResponseEntity<DetailPageResponse> getDetailPage(@RequestParam DetailPageRequest request) {
+        DetailPageResponse detailPageResponse = DetailPageResponse.from(detailPageService.getDetailArticleInfo(request));
 
         return ResponseEntity.ok().body(detailPageResponse);
     }
 
     @PostMapping("/detail")
-    public ResponseEntity<String> postMatchingRequest(@RequestBody DetailPageRequest request) {
-        String message = detailPageService.sendMatchingRequest(request);
+    public ResponseEntity<String> postMatchingRequest(@RequestBody DetailPageRequest request, Authentication authentication) {
+        String message = detailPageService.sendMatchingRequest(request, authentication);
 
         return ResponseEntity.ok().body(message);
     }

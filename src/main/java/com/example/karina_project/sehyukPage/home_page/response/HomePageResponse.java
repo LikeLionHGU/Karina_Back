@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Getter
@@ -13,19 +14,17 @@ import java.util.stream.Collectors;
 @Builder
 public class HomePageResponse {
 
-    private Long article_id;
-    private Long user_id;
-    private String fisher_name;
-    private String fish_species;
+    private Long articleId;
+    private String fisherName;
+    private Map<String, Integer> fishInfo;
     private String status;
     private String thumbnail;
 
     public static HomePageResponse from(ArticleDto articleDto) {
         return HomePageResponse.builder()
-                .article_id(articleDto.getArticle_id())
-                .user_id(articleDto.getUser_id())
-                .fisher_name(articleDto.getFisher_name())
-                .fish_species(articleDto.getFish_species())
+                .articleId(articleDto.getArticleId())
+                .fisherName(articleDto.getFisherName())
+                .fishInfo(articleDto.getFishInfo())
                 .status(articleDto.getStatus())
                 .thumbnail(articleDto.getThumbnail())
                 .build();

@@ -7,8 +7,10 @@ import com.example.karina_project.domain.Article;
 import com.example.karina_project.domain.User;
 import com.example.karina_project.repository.ArticleRepository;
 import com.example.karina_project.repository.UserRepository;
+import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -51,8 +53,14 @@ public class PostingArticleService {
     }
 
     @Transactional
-    public VideoResultResponse makeArticle(Long userId, String s3Url) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("user not found: " + userId));
+    public VideoResultResponse makeArticle(Authentication authentication, String s3Url) {
+
+        CustomUserDetail userDetail = (CustomUserDetail) authentication.getPrincipal();
+
+        User user = userRepository.findByLoginId(userDetail.getUsername());
+        if(user == null) {
+            throw new IllegalAccessError("User not found");
+        }
 
         Map<String, Integer> videoResult = videoAnalysis(s3Url).block();
 
@@ -74,8 +82,8 @@ public class PostingArticleService {
 
     @Transactional
     public VideoResultResponse reanalyzeFishInfo(EditFishInfoRequest request) {
-        Article article = articleRepository.findById(request.getArticle_id())
-                .orElseThrow(() -> new IllegalArgumentException("article not found: " + request.getArticle_id()));
+        Article article = articleRepository.findById(request.getArticleId())
+                .orElseThrow(() -> new IllegalArgumentException("article not found: " + request.getArticleId()));
 
         String video = article.getVideo();
 
@@ -90,8 +98,8 @@ public class PostingArticleService {
 
     @Transactional
     public void postArticleInfo(CreateArticleInfoRequest request, String s3Url) {
-        Article article = articleRepository.findById(request.getArticle_id())
-                .orElseThrow(() -> new IllegalArgumentException("article not found: " + request.getArticle_id()));
+        Article article = articleRepository.findById(request.getArticleId())
+                .orElseThrow(() -> new IllegalArgumentException("article not found: " + request.getArticleId()));
 
         article.setGetDate(request.getGetDate());
         article.setGetTime(request.getGetTime());

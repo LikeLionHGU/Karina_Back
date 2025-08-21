@@ -16,7 +16,7 @@ public class Matching {
     private Long id;
 
     @Column(name = "factory_id")
-    private Long factoryId;
+    private String factoryId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id", nullable = false)
@@ -25,10 +25,11 @@ public class Matching {
     @Column(name = "request_date")
     private String requestDate;
 
-    public static Matching from(Article article, Long factory_id) {
+    public static Matching from(Article article, String factoryId, String requestDate) {
         return Matching.builder()
-                .factoryId(factory_id)
+                .factoryId(factoryId)
                 .article(article)
+                .requestDate(requestDate)
                 .build();
     }
 }
