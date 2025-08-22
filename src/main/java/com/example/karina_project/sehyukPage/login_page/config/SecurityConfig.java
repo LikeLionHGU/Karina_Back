@@ -26,6 +26,13 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private static final String[] SWAGGER_WHITELIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
+    };
+
+
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtill jwtUtill;
 
@@ -51,8 +58,9 @@ public class SecurityConfig {
                         CorsConfiguration configuration = new CorsConfiguration();
 
                         configuration.setAllowedOrigins(Arrays.asList(
-                                "http://localhost:5173/",
-                                "http://localhost:3000/"
+                                "http://localhost:5173",
+                                "http://localhost:3000",
+                                "https://javadream.info"
                         ));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
@@ -74,11 +82,15 @@ public class SecurityConfig {
                 .httpBasic((auth) -> auth.disable());
 
         http
-                .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/", "/user/**").permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(SWAGGER_WHITELIST).permitAll()          // ← Swagger 허용
+                        .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll() // ← CORS preflight 허용(권장)
+                        .requestMatchers("/", "/index", "/public/**", "/user/**").permitAll()
                         .requestMatchers("/fisher/**").hasAnyAuthority("ROLE_FISHER", "ROLE_ADMIN")
                         .requestMatchers("/factory/**").hasAnyAuthority("ROLE_FACTORY", "ROLE_ADMIN")
-                        .anyRequest().authenticated());
+                        .anyRequest().authenticated()
+                );
+
 
         http
                 .addFilterBefore(new JWTFilter(jwtUtill), UsernamePasswordAuthenticationFilter.class);
