@@ -54,10 +54,10 @@ public class RegisterService {
         Boolean isExit = userRepository.existsByLoginId(request.getLoginId());
 
         if(isExit){
-            return "Invalid Id";
+            return "Invalid";
         }
 
-        return "Valid Id";
+        return "Valid";
     }
 
 

@@ -16,6 +16,8 @@ public class HomePageResponse {
 
     private Long articleId;
     private String fisherName;
+    private String mainAddress;
+    private String detailAddress;
     private Map<String, Integer> fishInfo;
     private String status;
     private String thumbnail;
@@ -24,6 +26,8 @@ public class HomePageResponse {
         return HomePageResponse.builder()
                 .articleId(articleDto.getArticleId())
                 .fisherName(articleDto.getFisherName())
+                .mainAddress(articleDto.getMainAddress())
+                .detailAddress(articleDto.getDetailAddress())
                 .fishInfo(articleDto.getFishInfo())
                 .status(articleDto.getStatus())
                 .thumbnail(articleDto.getThumbnail())

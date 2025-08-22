@@ -17,6 +17,8 @@ public class ArticleDto {
     private Long articleId;
     private Long userId;
     private String fisherName;
+    private String mainAddress;
+    private String detailAddress;
     private Map<String, Integer> fishInfo;
     private String getDate;
     private String getTime;
