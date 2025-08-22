@@ -1,6 +1,5 @@
 package com.example.karina_project.byoungchanPage.mypage.fisher.response;
 
-import com.example.karina_project.domain.Article;
 import com.example.karina_project.domain.User;
 import lombok.Builder;
 import lombok.Getter;

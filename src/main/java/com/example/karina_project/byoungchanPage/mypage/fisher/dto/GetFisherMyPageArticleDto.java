@@ -1,6 +1,5 @@
 package com.example.karina_project.byoungchanPage.mypage.fisher.dto;
 
-import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageArticleResponse;
 import com.example.karina_project.domain.Article;
 import lombok.Builder;
 import lombok.Getter;

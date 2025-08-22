@@ -2,10 +2,11 @@ package com.example.karina_project.sehyukPage.login_page;
 
 import com.example.karina_project.domain.User;
 import lombok.RequiredArgsConstructor;
-import java.util.ArrayList;
-import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @RequiredArgsConstructor
 public class CustomUserDetail implements UserDetails {

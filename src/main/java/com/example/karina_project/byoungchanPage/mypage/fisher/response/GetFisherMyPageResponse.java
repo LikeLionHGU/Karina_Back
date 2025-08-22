@@ -2,8 +2,6 @@ package com.example.karina_project.byoungchanPage.mypage.fisher.response;
 
 import com.example.karina_project.domain.Article;
 import com.example.karina_project.domain.Matching;
-import com.example.karina_project.domain.User;
-import com.example.karina_project.sehyukPage.home_page.dto.ArticleDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
