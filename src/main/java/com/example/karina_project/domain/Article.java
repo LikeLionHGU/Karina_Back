@@ -42,8 +42,11 @@ public class Article {
     @Column(name = "get_time")
     private String getTime;
 
-    @Column(name = "date_limit")
-    private String dateLimit;
+    @Column(name = "limit_date")
+    private String limitDate;
+
+    @Column(name = "limit_time")
+    private String limitTime;
 
     @Column(name = "post_time")
     private String postTime;

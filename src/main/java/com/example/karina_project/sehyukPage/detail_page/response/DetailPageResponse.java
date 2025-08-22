@@ -22,7 +22,8 @@ public class DetailPageResponse {
     private Map<String, Integer> fishInfo;
     private String getDate;
     private String getTime;
-    private String dateLimit;
+    private String limitDate;
+    private String limitTime;
     private String status;
     private String video;
 
@@ -36,7 +37,8 @@ public class DetailPageResponse {
                 .fishInfo(detailPageDto.getFishInfo())
                 .getDate(detailPageDto.getGetDate())
                 .getTime(detailPageDto.getGetTime())
-                .dateLimit(detailPageDto.getDateLimit())
+                .limitDate(detailPageDto.getLimitDate())
+                .limitTime(detailPageDto.getLimitTime())
                 .status(detailPageDto.getStatus())
                 .video(detailPageDto.getVideo())
                 .build();
