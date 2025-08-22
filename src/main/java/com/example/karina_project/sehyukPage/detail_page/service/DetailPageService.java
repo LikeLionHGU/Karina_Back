@@ -45,13 +45,15 @@ public class DetailPageService {
             return "이미 매칭 완료된 게시물입니다";
         }
 
-        Matching requestMatching = matchingRepository.findByArticleIdAndFactoryId(request.getArticleId(), requestUser.getLoginId());
+        Matching requestMatching = matchingRepository.findByArticleIdAndFactory(request.getArticleId(), requestUser);
         if(requestMatching == null) {
             String requestDate = LocalDate.now().toString();
             Matching newMatching = new Matching();
 
+            User user = userRepository.findByLoginId(userDetails.getUsername());
+
             newMatching.setArticle(targetArticle);
-            newMatching.setFactoryId(userDetails.getUsername());
+            newMatching.setFactory(user);
             newMatching.setRequestDate(requestDate);
             newMatching.setMatchingStatus("매칭 대기");
 

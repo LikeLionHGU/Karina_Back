@@ -13,11 +13,15 @@ import com.example.karina_project.repository.MatchingRepository;
 import com.example.karina_project.repository.UserRepository;
 import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -25,18 +29,23 @@ public class FisherMyPageService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
     private final MatchingRepository matchingRepository;
+    private final HttpServletResponse httpServletResponse;
 
 
     @Transactional
     public List<GetFisherMyPageResponse> getFisherMypageServiece(Long userId) {
 
-        List<Article> articles =  articleRepository.findByUserIdOrderByIdDesc(userId);
+        List<Article> articles =  articleRepository.findByUserIdAndStatusNotOrderByIdDesc(userId, "매칭 완료");
 
-        return articleRepository.findByUserIdOrderByIdDesc(userId)
-                .stream()
-                .map(GetFisherMyPageResponse::from)
-                .toList();
+        if (articles.isEmpty()) {
+            return List.of(); // 빈 리스트 반환
+        }
 
+        List<Long> articleIds = articles.stream().map(Article::getId).collect(toList());
+        List<Matching> matchingList = matchingRepository.findByArticleIdInAndMatchingStatus(articleIds, "매칭 대기");
+        List<GetFisherMyPageResponse> response = matchingList.stream().map(GetFisherMyPageResponse::from).toList();
+
+        return response;
     }
 
     @Transactional
@@ -46,10 +55,12 @@ public class FisherMyPageService {
 
         CustomUserDetail userDetail = (CustomUserDetail) authentication.getPrincipal();
 
-        Matching acceptMatching = matchingRepository.findByArticleIdAndFactoryId(articleId, userDetail.getUsername());
+        User factory = userRepository.findByLoginId(userDetail.getUsername());
+
+        Matching acceptMatching = matchingRepository.findByArticleIdAndFactory(articleId, factory);
         acceptMatching.setMatchingStatus("매칭 성공");
 
-        List<Matching> matchings = matchingRepository.findAllByArticleIdAndFactoryIdNot(articleId, userDetail.getUsername());
+        List<Matching> matchings = matchingRepository.findAllByArticleIdAndFactoryNot(articleId, factory);
         matchings.forEach(matching -> {matching.setMatchingStatus("매칭 실패");});
 
         return "success";
