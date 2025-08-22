@@ -10,7 +10,6 @@ import lombok.Setter;
 @Builder
 public class GetFisherMyPageInfoResponse {
 
-    private String loginId;
     private String name;
     private String phoneNumber;
     private String mainAddress;
@@ -18,7 +17,6 @@ public class GetFisherMyPageInfoResponse {
 
     public static GetFisherMyPageInfoResponse from(User user) {
         return GetFisherMyPageInfoResponse.builder()
-                .loginId(user.getLoginId())
                 .name(user.getName())
                 .phoneNumber(user.getPhoneNumber())
                 .mainAddress(user.getMainAddress())

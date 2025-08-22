@@ -1,5 +1,6 @@
 package com.example.karina_project.byoungchanPage.mypage.fisher;
 
+
 import com.example.karina_project.byoungchanPage.mypage.fisher.dto.GetFisherMyPageArticleDto;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageArticleRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageInfoRequest;
@@ -7,22 +8,18 @@ import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFishe
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageInfoResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageResponse;
 import com.example.karina_project.domain.Article;
-import com.example.karina_project.domain.Matching;
 import com.example.karina_project.domain.User;
 import com.example.karina_project.repository.ArticleRepository;
-import com.example.karina_project.repository.MatchingRepository;
 import com.example.karina_project.repository.UserRepository;
 import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import com.example.karina_project.sehyukPage.register_page.service.FileService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
-
 import static java.util.stream.Collectors.toList;
 
 @Service
