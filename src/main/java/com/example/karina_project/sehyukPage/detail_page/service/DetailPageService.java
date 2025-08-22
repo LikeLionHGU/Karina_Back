@@ -41,17 +41,26 @@ public class DetailPageService {
         if(requestUser == null) {
             return  "요청을 보낸 유저가 존재하지 않습니다";
         }
-        if(targetArticle.getStatus().equals("매칭 완료")){
+        if(targetArticle.getStatus().equals("매칭 완료")) {
             return "이미 매칭 완료된 게시물입니다";
         }
 
-        Matching matching = matchingRepository.findByArticleIdAndFactoryId(request.getArticleId(), requestUser.getLoginId());
-        if(matching == null) {
+        Matching requestMatching = matchingRepository.findByArticleIdAndFactoryId(request.getArticleId(), requestUser.getLoginId());
+        if(requestMatching == null) {
             String requestDate = LocalDate.now().toString();
-            matchingRepository.save(Matching.from(targetArticle, requestUser.getLoginId(), requestDate));
+            Matching newMatching = new Matching();
+
+            newMatching.setArticle(targetArticle);
+            newMatching.setFactoryId(userDetails.getUsername());
+            newMatching.setRequestDate(requestDate);
+            newMatching.setMatchingStatus("매칭 대기");
+
+            matchingRepository.save(newMatching);
             if(targetArticle.getStatus().equals("대기 중")){
                 targetArticle.setStatus("매칭 대기");
             }
+        }else{
+            return "이미 매칭 신청을 한 게시물입니다.";
         }
 
         return "매칭신청 완료";

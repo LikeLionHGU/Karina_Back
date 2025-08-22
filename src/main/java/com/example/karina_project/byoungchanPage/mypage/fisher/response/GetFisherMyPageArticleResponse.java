@@ -5,13 +5,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Map;
+
 @Getter
 @Setter
 @Builder
 public class GetFisherMyPageArticleResponse {
-    private String loginId;
+
     private Long articleId;
-    private String fishSpecies;
+    private Map<String, Integer> fishInfo;
     private String getDate;
     private String getTime;
     private String dateLimit;
@@ -19,9 +21,8 @@ public class GetFisherMyPageArticleResponse {
 
     public static GetFisherMyPageArticleResponse from(Article article) {
         return GetFisherMyPageArticleResponse.builder()
-                .loginId(article.getUser() != null ? article.getUser().getLoginId() : null)
                 .articleId(article.getId())
-                .fishSpecies(article.getFishSpecies())
+                .fishInfo(article.getFishInfo())
                 .getDate(article.getGetDate())
                 .getTime(article.getGetTime())
                 .dateLimit(article.getGetDate())

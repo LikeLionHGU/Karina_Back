@@ -35,7 +35,7 @@ public class JWTFilter extends OncePerRequestFilter {
 
         if(jwtUtill.isExpired(token)) {
             System.out.println("token expired");
-            filterChain.doFilter(request, response);
+            response.sendRedirect("/");
 
             return;
         }
