@@ -14,6 +14,5 @@ public class CreateArticleInfoRequest {
     private String getTime;
     private String limitDate;
     private String limitTime;
-    private String thumbnail;
 
 }

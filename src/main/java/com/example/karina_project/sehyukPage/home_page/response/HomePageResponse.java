@@ -19,6 +19,7 @@ public class HomePageResponse {
     private String mainAddress;
     private String detailAddress;
     private Map<String, Integer> fishInfo;
+    private String postDate;
     private String status;
     private String thumbnail;
 
@@ -29,6 +30,7 @@ public class HomePageResponse {
                 .mainAddress(articleDto.getMainAddress())
                 .detailAddress(articleDto.getDetailAddress())
                 .fishInfo(articleDto.getFishInfo())
+                .postDate(articleDto.getPostDate())
                 .status(articleDto.getStatus())
                 .thumbnail(articleDto.getThumbnail())
                 .build();

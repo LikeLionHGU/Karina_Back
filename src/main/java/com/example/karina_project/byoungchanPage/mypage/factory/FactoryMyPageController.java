@@ -22,13 +22,12 @@ public class FactoryMyPageController {
 
     private final FactoryMyPageService factoryMypageService;
 
-
-    // 공장 마이페이지 컨트롤러
     @GetMapping("/mypage")
-    public ResponseEntity<List<GetFactoryMyPageResponse>> getUserArticles(Authentication authentication) {
-        return ResponseEntity.ok(factoryMypageService.getUserArticles(authentication));
-    }
+    public ResponseEntity<GetFactoryMyPageResponse> getUserArticles(Authentication authentication) {
+        GetFactoryMyPageResponse response = factoryMypageService.getUserArticles(authentication);
 
+        return ResponseEntity.ok().body(response);
+    }
 
     @GetMapping("/mypage/profile")
     public ResponseEntity<GetFactoryMyPageProfileResponse> getUserProfileArticles(@AuthenticationPrincipal CustomUserDetail user) {
@@ -44,7 +43,6 @@ public class FactoryMyPageController {
 
         return ResponseEntity.ok(Map.of("success", success));
     }
-
 
     @PostMapping("/mypage/matchingCancel")
     public ResponseEntity<String> matchingCancel(FactoryMyPageRequestWithOnlyArticleId request, Authentication authentication) {
