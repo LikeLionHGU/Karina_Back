@@ -8,13 +8,16 @@ import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFishe
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageInfoResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageResponse;
 import com.example.karina_project.domain.Article;
+import com.example.karina_project.domain.Matching;
 import com.example.karina_project.domain.User;
 import com.example.karina_project.repository.ArticleRepository;
+import com.example.karina_project.repository.MatchingRepository;
 import com.example.karina_project.repository.UserRepository;
 import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import com.example.karina_project.sehyukPage.register_page.service.FileService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
