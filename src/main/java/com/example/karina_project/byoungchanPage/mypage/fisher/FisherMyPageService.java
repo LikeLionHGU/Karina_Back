@@ -1,23 +1,25 @@
 package com.example.karina_project.byoungchanPage.mypage.fisher;
 
+import com.example.karina_project.byoungchanPage.mypage.factory.request.PutFactoryMyPageProfileRequest;
+import com.example.karina_project.byoungchanPage.mypage.factory.response.GetFactoryMyPageProfileResponse;
+import com.example.karina_project.byoungchanPage.mypage.factory.response.GetFactoryMyPageResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageInfoRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageArticleRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageArticleResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageInfoResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageResponse;
 import com.example.karina_project.domain.Article;
-import com.example.karina_project.domain.Matching;
 import com.example.karina_project.domain.User;
 import com.example.karina_project.repository.ArticleRepository;
-import com.example.karina_project.repository.MatchingRepository;
 import com.example.karina_project.repository.UserRepository;
-import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
