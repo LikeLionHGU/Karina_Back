@@ -20,7 +20,8 @@ public class DetailPageDto {
     private Map<String, Integer> fishInfo;
     private String getDate;
     private String getTime;
-    private String dateLimit;
+    private String limitDate;
+    private String limitTime;
     private String status;
     private String video;
 
@@ -34,7 +35,8 @@ public class DetailPageDto {
                 .fishInfo(article.getFishInfo())
                 .getDate(article.getGetDate())
                 .getTime(article.getGetTime())
-                .dateLimit(article.getDateLimit())
+                .limitDate(article.getLimitDate())
+                .limitTime(article.getLimitTime())
                 .status(article.getStatus())
                 .video(article.getVideo())
                 .build();

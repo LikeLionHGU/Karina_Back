@@ -16,7 +16,8 @@ public class GetFisherMyPageArticleResponse {
     private Map<String, Integer> fishInfo;
     private String getDate;
     private String getTime;
-    private String dateLimit;
+    private String limitDate;
+    private String limitTime;
     private String status;
 
     public static GetFisherMyPageArticleResponse from(Article article) {
@@ -25,7 +26,8 @@ public class GetFisherMyPageArticleResponse {
                 .fishInfo(article.getFishInfo())
                 .getDate(article.getGetDate())
                 .getTime(article.getGetTime())
-                .dateLimit(article.getGetDate())
+                .limitDate(article.getLimitDate())
+                .limitTime(article.getLimitTime())
                 .status(article.getStatus())
                 .build();
     }

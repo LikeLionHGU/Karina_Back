@@ -18,7 +18,8 @@ public class GetFactoryMyPageResponse {
     private Map<String, Integer> fishInfo;
     private String getDate;
     private String getTime;
-    private String dateLimit;
+    private String limitDate;
+    private String limitTime;
     private String matchingStatus;
 
     public static GetFactoryMyPageResponse from(Matching matching){
@@ -26,7 +27,8 @@ public class GetFactoryMyPageResponse {
                 .fishInfo(matching.getArticle().getFishInfo())
                 .getDate(matching.getArticle().getGetDate())
                 .getTime(matching.getArticle().getGetTime())
-                .dateLimit(matching.getArticle().getDateLimit())
+                .limitDate(matching.getArticle().getLimitDate())
+                .limitTime(matching.getArticle().getLimitTime())
                 .matchingStatus(matching.getMatchingStatus())
                 .build();
     }

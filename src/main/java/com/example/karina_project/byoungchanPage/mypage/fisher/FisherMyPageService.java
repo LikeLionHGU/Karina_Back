@@ -1,7 +1,7 @@
 package com.example.karina_project.byoungchanPage.mypage.fisher;
 
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageInfoRequest;
-import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMypageArticleRequest;
+import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageArticleRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageArticleResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageInfoResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageResponse;
@@ -19,7 +19,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -67,7 +66,7 @@ public class FisherMyPageService {
     }
 
     @Transactional
-    public List<GetFisherMyPageArticleResponse> getFisherMypageArticleServiece(Long userId) {
+    public List<GetFisherMyPageArticleResponse> getFisherMyPageArticleService(Long userId) {
         return articleRepository.findByUserIdOrderByIdDesc(userId)
                 .stream()
                 .map(GetFisherMyPageArticleResponse::from)
@@ -75,11 +74,12 @@ public class FisherMyPageService {
     }
 
     @Transactional
-    public String editFisherMyPageArticleService(PutFisherMypageArticleRequest request) {
+    public String editFisherMyPageArticleService(PutFisherMyPageArticleRequest request) {
         Article article = articleRepository.findById(request.getArticleId()).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 없습니다.. id=" + request.getArticleId()));
         article.setGetDate(request.getGetDate());
         article.setGetTime(request.getGetTime());
-        article.setDateLimit(request.getDateLimit());
+        article.setLimitDate(request.getLimitDate());
+        article.setLimitTime(request.getLimitTime());
 
         return "success";
     }

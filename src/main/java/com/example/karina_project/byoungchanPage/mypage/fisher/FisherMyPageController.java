@@ -2,7 +2,7 @@ package com.example.karina_project.byoungchanPage.mypage.fisher;
 
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.FisherMyPageRequestWithOnlyArticleId;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageInfoRequest;
-import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMypageArticleRequest;
+import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageArticleRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageArticleResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageInfoResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageResponse;
@@ -24,7 +24,7 @@ public class FisherMyPageController {
     private final FisherMyPageService fisherMypageService;
 
     @GetMapping("/mypage")
-    public ResponseEntity<List<GetFisherMyPageResponse>> getFisherMypage(@AuthenticationPrincipal CustomUserDetail user) {
+    public ResponseEntity<List<GetFisherMyPageResponse>> getFisherMyPage(@AuthenticationPrincipal CustomUserDetail user) {
         List<GetFisherMyPageResponse> response = fisherMypageService.getFisherMypageServiece(user.getId());
 
         return ResponseEntity.ok().body(response);
@@ -38,20 +38,20 @@ public class FisherMyPageController {
     }
 
     @GetMapping("/mypage/posts")
-    public ResponseEntity<List<GetFisherMyPageArticleResponse>> getFisherMypageArticle(@AuthenticationPrincipal CustomUserDetail user) {
+    public ResponseEntity<List<GetFisherMyPageArticleResponse>> getFisherMyPageArticle(@AuthenticationPrincipal CustomUserDetail user) {
 
-        return ResponseEntity.ok(fisherMypageService.getFisherMypageArticleServiece(user.getId()));
+        return ResponseEntity.ok(fisherMypageService.getFisherMyPageArticleService(user.getId()));
     }
 
     @PutMapping("/mypage/posts")
-    public ResponseEntity<String> editFisherMypageArticle(@RequestBody PutFisherMypageArticleRequest putFisherMypageArticleRequest){
+    public ResponseEntity<String> editFisherMypageArticle(@RequestBody PutFisherMyPageArticleRequest putFisherMypageArticleRequest){
         String response = fisherMypageService.editFisherMyPageArticleService(putFisherMypageArticleRequest);
 
         return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/mypage/profile")
-    public ResponseEntity<GetFisherMyPageInfoResponse> getFisherMypageInfo(@AuthenticationPrincipal CustomUserDetail user) {
+    public ResponseEntity<GetFisherMyPageInfoResponse> getFisherMyPageInfo(@AuthenticationPrincipal CustomUserDetail user) {
 
         return ResponseEntity.ok(fisherMypageService.getFisherMypageInfo(user.getId()));
     }

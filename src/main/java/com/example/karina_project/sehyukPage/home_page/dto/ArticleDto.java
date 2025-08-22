@@ -22,7 +22,8 @@ public class ArticleDto {
     private Map<String, Integer> fishInfo;
     private String getDate;
     private String getTime;
-    private String dateLimit;
+    private String limitDate;
+    private String limitTime;
     private String postTime;
     private String status;
     private String thumbnail;

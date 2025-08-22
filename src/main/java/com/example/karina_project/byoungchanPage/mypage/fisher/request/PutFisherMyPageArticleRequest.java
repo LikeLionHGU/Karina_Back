@@ -5,11 +5,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PutFisherMypageArticleRequest {
+public class PutFisherMyPageArticleRequest {
 
     private Long articleId;
     private String getDate;
     private String getTime;
-    private String dateLimit;
+    private String limitDate;
+    private String limitTime;
 
 }

@@ -103,7 +103,8 @@ public class PostingArticleService {
 
         article.setGetDate(request.getGetDate());
         article.setGetTime(request.getGetTime());
-        article.setDateLimit(request.getDateLimit());
+        article.setLimitDate(request.getLimitDate());
+        article.setLimitTime(request.getLimitTime());
         article.setThumbnail(s3Url);
     }
 }
