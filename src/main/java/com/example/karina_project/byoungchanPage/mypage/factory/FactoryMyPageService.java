@@ -33,8 +33,8 @@ public class FactoryMyPageService {
     @Transactional
     public List<GetFactoryMyPageResponse> getUserArticles(Authentication authentication) {
         CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
-
-        List<GetFactoryMyPageResponse> response = matchingRepository.findByFactoryIdOrderByIdDesc(userDetails.getUsername()).stream().map(GetFactoryMyPageResponse::from).collect(Collectors.toList());
+        User factory = userRepository.findByLoginId(userDetails.getUsername());
+        List<GetFactoryMyPageResponse> response = matchingRepository.findByFactoryOrderByIdDesc(factory).stream().map(GetFactoryMyPageResponse::from).collect(Collectors.toList());
 
         return response;
     }
@@ -60,7 +60,8 @@ public class FactoryMyPageService {
     @Transactional
     public String requestMatchingCancel(FactoryMyPageRequestWithOnlyArticleId request, Authentication authentication) {
         CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
-        Matching requestMatching = matchingRepository.findByArticleIdAndFactoryId(request.getArticleId(), userDetails.getUsername());
+        User factory = userRepository.findByLoginId(userDetails.getUsername());
+        Matching requestMatching = matchingRepository.findByArticleIdAndFactory(request.getArticleId(), factory);
         if(requestMatching == null) {
             return "fail";
         }

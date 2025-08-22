@@ -25,30 +25,34 @@ public class FisherMyPageController {
 
     @GetMapping("/mypage")
     public ResponseEntity<List<GetFisherMyPageResponse>> getFisherMypage(@AuthenticationPrincipal CustomUserDetail user) {
-        return ResponseEntity.ok(fisherMypageService.getFisherMypageServiece(user.getId()));
+        List<GetFisherMyPageResponse> response = fisherMypageService.getFisherMypageServiece(user.getId());
+
+        return ResponseEntity.ok().body(response);
     }
 
     @PutMapping("/mypage")
     public ResponseEntity<String> matchAccepting(@RequestBody FisherMyPageRequestWithOnlyArticleId request, Authentication authentication) {
         String response = fisherMypageService.matchAccepting(request.getArticleId(), authentication);
+
         return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/mypage/posts")
-    public ResponseEntity<List<GetFisherMyPageArticleResponse>> getFisherMypageArticle(
-            @AuthenticationPrincipal CustomUserDetail user) {
+    public ResponseEntity<List<GetFisherMyPageArticleResponse>> getFisherMypageArticle(@AuthenticationPrincipal CustomUserDetail user) {
+
         return ResponseEntity.ok(fisherMypageService.getFisherMypageArticleServiece(user.getId()));
     }
 
     @PutMapping("/mypage/posts")
     public ResponseEntity<String> editFisherMypageArticle(@RequestBody PutFisherMypageArticleRequest putFisherMypageArticleRequest){
         String response = fisherMypageService.editFisherMyPageArticleService(putFisherMypageArticleRequest);
+
         return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/mypage/profile")
-    public ResponseEntity<GetFisherMyPageInfoResponse> getFisherMypageInfo(
-            @AuthenticationPrincipal CustomUserDetail user) {
+    public ResponseEntity<GetFisherMyPageInfoResponse> getFisherMypageInfo(@AuthenticationPrincipal CustomUserDetail user) {
+
         return ResponseEntity.ok(fisherMypageService.getFisherMypageInfo(user.getId()));
     }
 

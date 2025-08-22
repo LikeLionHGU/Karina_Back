@@ -15,8 +15,9 @@ public class Matching {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "factory_id")
-    private String factoryId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "factory_id", nullable = false)
+    private User factory;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id", nullable = false)

@@ -16,6 +16,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     // 특정 사용자 글 전체(최신순)
     List<Article> findByUserIdOrderByIdDesc(Long userId);
 
+    List<Article> findByUserIdAndStatusNotOrderByIdDesc(Long userId, String status);
+
     // 특정 사용자 최신 글 1개
     Optional<Article> findTop1ByUserIdOrderByIdDesc(Long userId);
 
