@@ -18,9 +18,9 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/factory")
-public class FactoryMypageController {
+public class FactoryMyPageController {
 
-    private final FactoryMypageService factoryMypageService;
+    private final FactoryMyPageService factoryMypageService;
 
 
     // 공장 마이페이지 컨트롤러
