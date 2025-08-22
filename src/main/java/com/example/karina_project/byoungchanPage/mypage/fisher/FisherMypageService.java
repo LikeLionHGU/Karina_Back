@@ -1,24 +1,22 @@
 package com.example.karina_project.byoungchanPage.mypage.fisher;
 
-import com.example.karina_project.byoungchanPage.mypage.factory.request.PutFactoryMyPageProfileRequest;
-import com.example.karina_project.byoungchanPage.mypage.factory.response.GetFactoryMyPageProfileResponse;
-import com.example.karina_project.byoungchanPage.mypage.factory.response.GetFactoryMyPageResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageInfoRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMypageArticleRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageArticleResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageInfoResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageResponse;
 import com.example.karina_project.domain.Article;
+import com.example.karina_project.domain.Matching;
 import com.example.karina_project.domain.User;
 import com.example.karina_project.repository.ArticleRepository;
+import com.example.karina_project.repository.MatchingRepository;
 import com.example.karina_project.repository.UserRepository;
+import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import java.util.List;
 
 @Service
@@ -26,11 +24,14 @@ import java.util.List;
 public class FisherMypageService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
+    private final MatchingRepository matchingRepository;
 
 
-    //@GetMapping("/mypage")
-    @Transactional(readOnly = true) // ← 이 한 줄이 핵심!
+    @Transactional
     public List<GetFisherMyPageResponse> getFisherMypageServiece(Long userId) {
+
+        List<Article> articles =  articleRepository.findByUserIdOrderByIdDesc(userId);
+
         return articleRepository.findByUserIdOrderByIdDesc(userId)
                 .stream()
                 .map(GetFisherMyPageResponse::from)
@@ -38,17 +39,23 @@ public class FisherMypageService {
 
     }
 
-    //@PutMapping("/mypage/{articleId}")
-    public boolean matchAccepting(@PathVariable Long articleId) {
+    @Transactional
+    public String matchAccepting(Long articleId, Authentication authentication) {
         Article article = articleRepository.findById(articleId).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 없습니다.. id=" + articleId));
         article.setStatus("매칭 완료");
-        articleRepository.save(article);
-        return true;
 
+        CustomUserDetail userDetail = (CustomUserDetail) authentication.getPrincipal();
+
+        Matching acceptMatching = matchingRepository.findByArticleIdAndFactoryId(articleId, userDetail.getUsername());
+        acceptMatching.setMatchingStatus("매칭 성공");
+
+        List<Matching> matchings = matchingRepository.findAllByArticleIdAndFactoryIdNot(articleId, userDetail.getUsername());
+        matchings.forEach(matching -> {matching.setMatchingStatus("매칭 실패");});
+
+        return "success";
     }
 
-    //@GetMapping("/mypage/article")
-    @Transactional(readOnly = true) // ← 이 한 줄
+    @Transactional
     public List<GetFisherMyPageArticleResponse> getFisherMypageArticleServiece(Long userId) {
         return articleRepository.findByUserIdOrderByIdDesc(userId)
                 .stream()
@@ -56,35 +63,27 @@ public class FisherMypageService {
                 .toList();
     }
 
+    @Transactional
+    public String editFisherMyPageArticleService(PutFisherMypageArticleRequest request) {
+        Article article = articleRepository.findById(request.getArticleId()).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 없습니다.. id=" + request.getArticleId()));
+        article.setGetDate(request.getGetDate());
+        article.setGetTime(request.getGetTime());
+        article.setDateLimit(request.getDateLimit());
 
-
-
-    //어떤 유저의 article인지 구별할 코드 구현해야함 (로그인 구현되면 세션 이용해서 추후 개발)
-    //@PutMapping("/mypage/article/{articleId}")
-    public boolean editFisherMyPageArticleService(PutFisherMypageArticleRequest putFisherMypageArticleRequest, @PathVariable Long articleId){
-        Article article = articleRepository.findById(articleId).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 없습니다.. id=" + articleId));
-        article.setGetDate(putFisherMypageArticleRequest.getGetDate());
-        article.setGetTime(putFisherMypageArticleRequest.getGetTime());
-        article.setDateLimit(putFisherMypageArticleRequest.getDateLimit());
-
-        articleRepository.save(article);
-        return true;
+        return "success";
     }
 
-    //@GetMapping("/mypage/profile")
     public GetFisherMyPageInfoResponse getFisherMypageInfo(Long userId) {
         return userRepository.findById(userId)
                 .map(GetFisherMyPageInfoResponse::from)
                 .orElseThrow(() -> new EntityNotFoundException("유저가 없습니다. id=" + userId));
     }
 
-    //@PutMapping("/mypage/profile")
     @Transactional
     public boolean editFisherMyPageInfoService(PutFisherMyPageInfoRequest putFisherMyPageInfoRequest, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 유저가 없습니다. id=" + userId));
 
-        user.setLoginId(putFisherMyPageInfoRequest.getLoginId());
         user.setPassword(putFisherMyPageInfoRequest.getPassword());
         user.setPhoneNumber(putFisherMyPageInfoRequest.getPhoneNumber());
         user.setMainAddress(putFisherMyPageInfoRequest.getMainAddress());

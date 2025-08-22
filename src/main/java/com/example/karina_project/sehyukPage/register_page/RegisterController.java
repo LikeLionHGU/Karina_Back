@@ -29,7 +29,7 @@ public class RegisterController {
         return ResponseEntity.ok().body(message);
     }
 
-    @PostMapping("/register/id_validation")
+    @PostMapping("/register/idValidation")
     public ResponseEntity<String> idValidate(@RequestBody RegisterRequestOnlyId registerRequestOnlyId) {
         String message = registerService.IdValidation(registerRequestOnlyId);
 

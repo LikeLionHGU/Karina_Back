@@ -6,28 +6,26 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Map;
+
 @Getter
 @Setter
 @Builder
 public class GetFisherMyPageResponse {
 
-    private String loginId;
     private Long articleId;
-    private String name;
+    private String factoryName;
     private String phoneNumber;
-    private String fishSpecies;
-    private String getDate;
-    private String fishCount;
+    private Map<String, Integer> fishInfo;
+    private String requestDate;
 
     public static GetFisherMyPageResponse from(Article article) {
         return GetFisherMyPageResponse.builder()
-                .loginId(article.getUser() != null ? article.getUser().getLoginId() : null)
-                .name(article.getUser() != null ? article.getUser().getName() : null)
+                .factoryName(article.getUser() != null ? article.getUser().getName() : null)
                 .phoneNumber(article.getUser() != null ? article.getUser().getPhoneNumber() : null)
                 .articleId(article.getId())
-                .fishSpecies(article.getFishSpecies())
-                .getDate(article.getGetDate())
-                .fishCount(article.getFishCount())
+                .fishInfo(article.getFishInfo())
+                .requestDate(article.getGetDate())
                 .build();
     }
 }

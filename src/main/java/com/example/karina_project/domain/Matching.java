@@ -25,11 +25,7 @@ public class Matching {
     @Column(name = "request_date")
     private String requestDate;
 
-    public static Matching from(Article article, String factoryId, String requestDate) {
-        return Matching.builder()
-                .factoryId(factoryId)
-                .article(article)
-                .requestDate(requestDate)
-                .build();
-    }
+    @Column(name = "matching_status")
+    private String matchingStatus;
+
 }

@@ -1,6 +1,7 @@
 package com.example.karina_project.byoungchanPage.mypage.factory;
 
 
+import com.example.karina_project.byoungchanPage.mypage.factory.request.FactoryMyPageRequestWithOnlyArticleId;
 import com.example.karina_project.byoungchanPage.mypage.factory.request.PutFactoryMyPageProfileRequest;
 import com.example.karina_project.byoungchanPage.mypage.factory.response.GetFactoryMyPageProfileResponse;
 import com.example.karina_project.byoungchanPage.mypage.factory.response.GetFactoryMyPageResponse;
@@ -30,16 +31,12 @@ public class FactoryMypageController {
 
 
     @GetMapping("/mypage/profile")
-    public ResponseEntity<GetFactoryMyPageProfileResponse> getUserProfileArticles(
-            @AuthenticationPrincipal CustomUserDetail user) {
+    public ResponseEntity<GetFactoryMyPageProfileResponse> getUserProfileArticles(@AuthenticationPrincipal CustomUserDetail user) {
         return ResponseEntity.ok(factoryMypageService.getUserProfileArticles(user.getId()));
     }
 
     @PutMapping("/mypage/profile")
-    public ResponseEntity<?> putUserProfileArticles(
-            @RequestBody PutFactoryMyPageProfileRequest putFactoryMyPageProfileRequest,
-            @AuthenticationPrincipal CustomUserDetail user) {
-
+    public ResponseEntity<?> putUserProfileArticles(@RequestBody PutFactoryMyPageProfileRequest putFactoryMyPageProfileRequest, @AuthenticationPrincipal CustomUserDetail user) {
         boolean success = factoryMypageService.putUserProfileArticles(
                 putFactoryMyPageProfileRequest,
                 user.getId() // 로그인한 유저의 ID
@@ -48,4 +45,11 @@ public class FactoryMypageController {
         return ResponseEntity.ok(Map.of("success", success));
     }
 
+
+    @PostMapping("/mypage/matchingCancel")
+    public ResponseEntity<String> matchingCancel(FactoryMyPageRequestWithOnlyArticleId request, Authentication authentication) {
+        String response = factoryMypageService.requestMatchingCancel(request, authentication);
+
+        return ResponseEntity.ok().body(response);
+    }
 }

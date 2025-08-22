@@ -1,15 +1,13 @@
 package com.example.karina_project.byoungchanPage.mypage.fisher.request;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class PutFisherMypageArticleRequest {
+@NoArgsConstructor
+public class FisherMypageRequestWithOnlyArticleId {
 
     private Long articleId;
-    private String getDate;
-    private String getTime;
-    private String dateLimit;
-
 }
