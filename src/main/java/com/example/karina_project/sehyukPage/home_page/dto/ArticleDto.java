@@ -24,7 +24,7 @@ public class ArticleDto {
     private String getTime;
     private String limitDate;
     private String limitTime;
-    private String postTime;
+    private String postDate;
     private String status;
     private String thumbnail;
 
@@ -33,7 +33,7 @@ public class ArticleDto {
                 .articleId(article.getId())
                 .fisherName(article.getUser().getName())
                 .fishInfo(article.getFishInfo())
-                .postTime(article.getPostTime())
+                .postDate(article.getPostDate())
                 .status(article.getStatus())
                 .thumbnail(article.getThumbnail())
                 .build();

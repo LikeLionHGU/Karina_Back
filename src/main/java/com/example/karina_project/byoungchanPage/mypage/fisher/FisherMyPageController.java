@@ -7,12 +7,15 @@ import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFishe
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageInfoResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageResponse;
 import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
+import com.example.karina_project.sehyukPage.register_page.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +25,7 @@ import java.util.Map;
 public class FisherMyPageController {
 
     private final FisherMyPageService fisherMypageService;
+    private final FileService fileService;
 
     @GetMapping("/mypage")
     public ResponseEntity<List<GetFisherMyPageResponse>> getFisherMyPage(@AuthenticationPrincipal CustomUserDetail user) {
@@ -38,15 +42,16 @@ public class FisherMyPageController {
     }
 
     @GetMapping("/mypage/posts")
-    public ResponseEntity<List<GetFisherMyPageArticleResponse>> getFisherMyPageArticle(@AuthenticationPrincipal CustomUserDetail user) {
+    public ResponseEntity<GetFisherMyPageArticleResponse> getFisherMyPageArticle(@AuthenticationPrincipal CustomUserDetail user) {
+        GetFisherMyPageArticleResponse response = fisherMypageService.getFisherMyPageArticleService(user.getId());
 
-        return ResponseEntity.ok(fisherMypageService.getFisherMyPageArticleService(user.getId()));
+        return ResponseEntity.ok().body(response);
     }
 
     @PutMapping("/mypage/posts")
-    public ResponseEntity<String> editFisherMypageArticle(@RequestBody PutFisherMyPageArticleRequest putFisherMypageArticleRequest){
-        String response = fisherMypageService.editFisherMyPageArticleService(putFisherMypageArticleRequest);
-
+    public ResponseEntity<String> editFisherMypageArticle(@RequestPart("info") PutFisherMyPageArticleRequest putFisherMypageArticleRequest, @RequestPart("thumbnail") MultipartFile file) throws IOException {
+        String s3Url = fileService.uploadFile(file, "thumbnail/");
+        String response = fisherMypageService.editFisherMyPageArticleService(putFisherMypageArticleRequest, s3Url);
         return ResponseEntity.ok().body(response);
     }
 

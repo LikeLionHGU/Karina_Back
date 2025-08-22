@@ -1,6 +1,7 @@
 package com.example.karina_project.byoungchanPage.mypage.factory;
 
 
+import com.example.karina_project.byoungchanPage.mypage.factory.dto.GetFactoryMyPageDto;
 import com.example.karina_project.byoungchanPage.mypage.factory.request.FactoryMyPageRequestWithOnlyArticleId;
 import com.example.karina_project.byoungchanPage.mypage.factory.request.PutFactoryMyPageProfileRequest;
 import com.example.karina_project.byoungchanPage.mypage.factory.response.GetFactoryMyPageProfileResponse;
@@ -30,13 +31,24 @@ public class FactoryMyPageService {
     private final ArticleRepository articleRepository;
     private final MatchingRepository matchingRepository;
 
-    @Transactional
-    public List<GetFactoryMyPageResponse> getUserArticles(Authentication authentication) {
+    public List<GetFactoryMyPageDto> getMatchingSuccessList(User factory) {
+        List<GetFactoryMyPageDto> SuccessList = matchingRepository.findByFactoryAndMatchingStatusOrderByIdDesc(factory, "매칭 성공").stream().map(GetFactoryMyPageDto::from).collect(Collectors.toList());
+        return SuccessList;
+    }
+
+    public List<GetFactoryMyPageDto> getMatchingUnSuccessList(User factory) {
+        List<GetFactoryMyPageDto> UnSuccessList = matchingRepository.findByFactoryAndMatchingStatusNotOrderByIdDesc(factory, "매칭 성공").stream().map(GetFactoryMyPageDto::from).collect(Collectors.toList());
+        return UnSuccessList;
+    }
+
+    public GetFactoryMyPageResponse getUserArticles(Authentication authentication) {
         CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
         User factory = userRepository.findByLoginId(userDetails.getUsername());
-        List<GetFactoryMyPageResponse> response = matchingRepository.findByFactoryOrderByIdDesc(factory).stream().map(GetFactoryMyPageResponse::from).collect(Collectors.toList());
 
-        return response;
+        return GetFactoryMyPageResponse.builder()
+                .matchingSuccessList(getMatchingSuccessList(factory))
+                .matchingNotSuccessList(getMatchingUnSuccessList(factory))
+                .build();
     }
 
     public GetFactoryMyPageProfileResponse getUserProfileArticles(Long userId) {
@@ -62,6 +74,7 @@ public class FactoryMyPageService {
         CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
         User factory = userRepository.findByLoginId(userDetails.getUsername());
         Matching requestMatching = matchingRepository.findByArticleIdAndFactory(request.getArticleId(), factory);
+
         if(requestMatching == null) {
             return "fail";
         }

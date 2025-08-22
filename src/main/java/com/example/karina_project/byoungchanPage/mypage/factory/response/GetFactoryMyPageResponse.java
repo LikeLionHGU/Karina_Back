@@ -1,36 +1,19 @@
 package com.example.karina_project.byoungchanPage.mypage.factory.response;
 
-
-import com.example.karina_project.domain.Article;
-import com.example.karina_project.domain.Matching;
-import com.example.karina_project.domain.User;
+import com.example.karina_project.byoungchanPage.mypage.factory.dto.GetFactoryMyPageDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
-import java.util.Map;
+import java.util.List;
 
 @Getter
 @Setter
 @Builder
 public class GetFactoryMyPageResponse {
-    private Map<String, Integer> fishInfo;
-    private String getDate;
-    private String getTime;
-    private String limitDate;
-    private String limitTime;
-    private String matchingStatus;
 
-    public static GetFactoryMyPageResponse from(Matching matching){
-        return GetFactoryMyPageResponse.builder()
-                .fishInfo(matching.getArticle().getFishInfo())
-                .getDate(matching.getArticle().getGetDate())
-                .getTime(matching.getArticle().getGetTime())
-                .limitDate(matching.getArticle().getLimitDate())
-                .limitTime(matching.getArticle().getLimitTime())
-                .matchingStatus(matching.getMatchingStatus())
-                .build();
-    }
+    private List<GetFactoryMyPageDto> matchingSuccessList;
+    private List<GetFactoryMyPageDto> matchingNotSuccessList;
+
 
 }

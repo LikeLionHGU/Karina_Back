@@ -29,13 +29,13 @@ public class PostingArticleController {
     }
 
     @PutMapping("/post/edit/info")
-    public ResponseEntity<VideoResultResponse> editFishInfo(@RequestBody EditFishInfoRequest request) {
+    public ResponseEntity<VideoResultResponse> editFishInfo(@RequestBody EditFishInfoRequest request) throws IOException {
         VideoResultResponse result = postingArticleService.reanalyzeFishInfo(request);
         return ResponseEntity.ok().body(result);
     }
 
     @PostMapping("/post/info")
-    public ResponseEntity<String> postArticleInfo(@RequestBody CreateArticleInfoRequest request, @RequestPart("thumbnail") MultipartFile file) throws IOException {
+    public ResponseEntity<String> postArticleInfo(@RequestPart("info") CreateArticleInfoRequest request, @RequestPart("thumbnail") MultipartFile file) throws IOException {
 
         String s3Url = fileService.uploadFile(file, "thumbnail/");
 

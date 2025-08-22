@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
@@ -40,6 +41,10 @@ public class PostingArticleService {
                 .bodyToMono(VideoResultResponse.class)
                 .map(response -> {
                     Map<String, Integer> fullResults = response.analysisResult();
+
+                    if (fullResults == null) {
+                        return new LinkedHashMap<String, Integer>();
+                    }
 
                     return fullResults.entrySet().stream()
                             .limit(3)
@@ -100,11 +105,14 @@ public class PostingArticleService {
     public void postArticleInfo(CreateArticleInfoRequest request, String s3Url) {
         Article article = articleRepository.findById(request.getArticleId())
                 .orElseThrow(() -> new IllegalArgumentException("article not found: " + request.getArticleId()));
+        String postDate = LocalDate.now().toString();
 
         article.setGetDate(request.getGetDate());
         article.setGetTime(request.getGetTime());
         article.setLimitDate(request.getLimitDate());
         article.setLimitTime(request.getLimitTime());
+        article.setPostDate(postDate);
         article.setThumbnail(s3Url);
+
     }
 }

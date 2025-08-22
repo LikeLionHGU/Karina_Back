@@ -48,8 +48,8 @@ public class Article {
     @Column(name = "limit_time")
     private String limitTime;
 
-    @Column(name = "post_time")
-    private String postTime;
+    @Column(name = "post_date")
+    private String postDate;
 
     @Column(name = "status")
     private String status;
