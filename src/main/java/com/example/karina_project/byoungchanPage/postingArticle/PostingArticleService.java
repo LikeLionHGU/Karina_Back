@@ -1,8 +1,8 @@
 package com.example.karina_project.byoungchanPage.postingArticle;
 
-import com.example.karina_project.byoungchanPage.postingArticle.response.VideoResultResponse;
 import com.example.karina_project.byoungchanPage.postingArticle.request.CreateArticleInfoRequest;
 import com.example.karina_project.byoungchanPage.postingArticle.request.EditFishInfoRequest;
+import com.example.karina_project.byoungchanPage.postingArticle.response.VideoResultResponse;
 import com.example.karina_project.domain.Article;
 import com.example.karina_project.domain.User;
 import com.example.karina_project.repository.ArticleRepository;
@@ -17,8 +17,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -77,6 +77,7 @@ public class PostingArticleService {
         article.setUser(user);
         article.setVideo(s3Url);
         article.setFishInfo(videoResult);
+        article.setStatus("대기 중");
 
         articleRepository.save(article);
 

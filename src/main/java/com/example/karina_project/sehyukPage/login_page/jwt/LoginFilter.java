@@ -1,7 +1,8 @@
 package com.example.karina_project.sehyukPage.login_page.jwt;
 
-import com.example.karina_project.sehyukPage.login_page.token.CustomAuthenticationToken;
 import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
+import com.example.karina_project.sehyukPage.login_page.token.CustomAuthenticationToken;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,9 +13,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
@@ -37,7 +39,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     //로그인 성공시 실행하는 메소드 (여기서 JWT를 발급하면 됨)
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException {
         CustomUserDetail customUserDetails = (CustomUserDetail) authentication.getPrincipal();
 
         String username = customUserDetails.getUsername();
@@ -51,6 +53,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String token = jwtUtill.createJwt(username, role, HoursInMillis);
 
         response.addHeader("Authorization", "Bearer " + token);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        Map<String, String> responseBody = Map.of("role", role);
+
+        new ObjectMapper().writeValue(response.getWriter(), responseBody);
     }
 
     //로그인 실패시 실행하는 메소드

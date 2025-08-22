@@ -7,14 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
-    // 특정 사용자 글 전체(최신순)
-    List<Article> findByUserIdOrderByIdDesc(Long userId);
 
     List<Article> findByUserIdAndStatusNotOrderByIdDesc(Long userId, String status);
 

@@ -33,6 +33,8 @@ public class ArticleDto {
                 .articleId(article.getId())
                 .fisherName(article.getUser().getName())
                 .fishInfo(article.getFishInfo())
+                .mainAddress(article.getUser().getMainAddress())
+                .detailAddress(article.getUser().getDetailAddress())
                 .postDate(article.getPostDate())
                 .status(article.getStatus())
                 .thumbnail(article.getThumbnail())
