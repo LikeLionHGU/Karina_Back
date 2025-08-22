@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class FisherMypageRequestWithOnlyArticleId {
+public class FisherMyPageRequestWithOnlyArticleId {
 
     private Long articleId;
 }

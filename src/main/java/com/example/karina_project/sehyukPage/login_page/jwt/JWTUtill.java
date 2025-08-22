@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Component
-public class    JWTUtill {
+public class JWTUtill {
 
     private SecretKey secretKey;
 
@@ -45,7 +45,5 @@ public class    JWTUtill {
                 .signWith(secretKey)
                 .compact();
     }
-
-
 
 }

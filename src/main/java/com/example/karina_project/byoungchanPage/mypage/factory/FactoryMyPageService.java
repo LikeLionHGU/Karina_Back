@@ -19,13 +19,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class FactoryMypageService {
+public class FactoryMyPageService {
 
     private final UserRepository userRepository;
     private final ArticleRepository articleRepository;
@@ -35,7 +34,7 @@ public class FactoryMypageService {
     public List<GetFactoryMyPageResponse> getUserArticles(Authentication authentication) {
         CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
 
-        List<GetFactoryMyPageResponse> response = matchingRepository.findByFactorIdOrderByIdDesc(userDetails.getUsername()).stream().map(GetFactoryMyPageResponse::from).collect(Collectors.toList());
+        List<GetFactoryMyPageResponse> response = matchingRepository.findByFactoryIdOrderByIdDesc(userDetails.getUsername()).stream().map(GetFactoryMyPageResponse::from).collect(Collectors.toList());
 
         return response;
     }

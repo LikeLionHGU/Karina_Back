@@ -21,7 +21,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class FisherMypageService {
+public class FisherMyPageService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
     private final MatchingRepository matchingRepository;
