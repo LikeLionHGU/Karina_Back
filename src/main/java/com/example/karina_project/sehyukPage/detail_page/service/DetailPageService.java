@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +40,7 @@ public class DetailPageService {
         }
         CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
         User requestUser = userRepository.findByLoginId(userDetails.getUsername());
+        System.out.println(">>> userDetails.getUsername() = " + userDetails.getUsername());
         if (requestUser == null) {
             return "요청을 보낸 유저가 존재하지 않습니다";
         }
@@ -48,8 +48,6 @@ public class DetailPageService {
             return "이미 매칭 완료된 게시물입니다";
         }
 
-        // --- 이 부분의 코드를 수정했습니다. ---
-        // findByArticleIdAndFactory 메서드가 Optional<Matching>을 반환한다고 가정하고 코드를 작성했습니다.
         List<Matching> requestMatchingOptional = matchingRepository.findByArticleIdAndFactory(request.getArticleId(), requestUser);
 
         if (requestMatchingOptional.isEmpty()) {
