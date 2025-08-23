@@ -72,6 +72,9 @@ public class FactoryMyPageService {
     @Transactional
     public String requestMatchingCancel(FactoryMyPageRequestWithOnlyArticleId request, Authentication authentication) {
         CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
+        if(userDetails == null) {
+            return "can't find user";
+        }
         User factory = userRepository.findByLoginId(userDetails.getUsername());
         Matching requestMatching = matchingRepository.findByArticleIdAndFactory(request.getArticleId(), factory);
 
