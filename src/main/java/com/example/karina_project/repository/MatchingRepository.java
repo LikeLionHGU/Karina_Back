@@ -3,9 +3,13 @@ package com.example.karina_project.repository;
 import com.example.karina_project.domain.Matching;
 import com.example.karina_project.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MatchingRepository extends JpaRepository<Matching, Long> {
@@ -18,4 +22,13 @@ public interface MatchingRepository extends JpaRepository<Matching, Long> {
     List<Matching> findByArticleIdInAndMatchingStatus(List<Long> articleIds, String status);
     List<Matching> findByFactoryOrderByIdDesc(User factor);
     List<Matching> findAllByArticleIdAndFactoryNot(Long articleId, User factory);
+
+        Optional<Matching> findByArticleIdAndFactoryUsingFisher(Long articleId, User factory);
+        Optional<Matching> findByArticleIdAndFisher(Long articleId, User fisher);
+
+        @Modifying(clearAutomatically = true, flushAutomatically = true)
+        @Query("update Matching m set m.matchingStatus = '매칭 마감' " +
+                "where m.article.id = :articleId and m.id <> :acceptedId")
+        int closeOthers(@Param("articleId") Long articleId, @Param("acceptedId") Long acceptedId);
+
 }
