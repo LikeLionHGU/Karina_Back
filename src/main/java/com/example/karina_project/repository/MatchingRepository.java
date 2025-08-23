@@ -13,8 +13,8 @@ import java.util.Optional;
 
 @Repository
 public interface MatchingRepository extends JpaRepository<Matching, Long> {
-    Matching findByArticleIdAndFactory(Long articleId, User factory);
-    Matching findByArticleId(Long articleId);
+    Optional<Matching> findByArticleIdAndFactory(Long articleId, User factory);
+    Optional<Matching> findByArticleId(Long articleId);
 
     List<Matching> findByFactoryAndMatchingStatusOrderByIdDesc(User factory, String status);
     List<Matching> findByFactoryAndMatchingStatusNotOrderByIdDesc(User factory, String status);

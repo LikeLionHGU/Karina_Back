@@ -9,6 +9,8 @@ import lombok.Setter;
 @Setter
 @Builder
 public class GetFactoryMyPageProfileResponse {
+
+        private String loginId;
         private String name;
         private String phoneNumber;
         private String mainAddress;
@@ -17,6 +19,7 @@ public class GetFactoryMyPageProfileResponse {
         public static GetFactoryMyPageProfileResponse from(User entity) {
 
             return GetFactoryMyPageProfileResponse.builder()
+                    .loginId(entity.getLoginId())
                     .phoneNumber(entity.getPhoneNumber())
                     .mainAddress(entity.getMainAddress())
                     .detailAddress(entity.getDetailAddress())

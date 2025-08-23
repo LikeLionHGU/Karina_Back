@@ -16,9 +16,9 @@ public class DetailPageController {
 
     private final DetailPageService detailPageService;
 
-    @GetMapping("/detail")
-    public ResponseEntity<DetailPageResponse> getDetailPage(@RequestBody DetailPageRequest request) {
-        DetailPageResponse detailPageResponse = DetailPageResponse.from(detailPageService.getDetailArticleInfo(request));
+    @GetMapping("/detail/{articleId}")
+    public ResponseEntity<DetailPageResponse> getDetailPage(@PathVariable Long articleId) {
+        DetailPageResponse detailPageResponse = DetailPageResponse.from(detailPageService.getDetailArticleInfo(articleId));
 
         return ResponseEntity.ok().body(detailPageResponse);
     }

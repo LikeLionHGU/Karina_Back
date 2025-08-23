@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +26,8 @@ public class DetailPageService {
     private final UserRepository userRepository;
 
     @Transactional
-    public DetailPageDto getDetailArticleInfo(DetailPageRequest request) {
-        Article article = articleRepository.findById(request.getArticleId()).orElse(null);
+    public DetailPageDto getDetailArticleInfo(Long articleId) {
+        Article article = articleRepository.findById(articleId).orElse(null);
         DetailPageDto detailPageDto = DetailPageDto.from(article);
         return detailPageDto;
     }
@@ -34,20 +35,23 @@ public class DetailPageService {
     @Transactional
     public String sendMatchingRequest(DetailPageRequest request, Authentication authentication) {
         Article targetArticle = articleRepository.findByIdWithUser(request.getArticleId()).orElse(null);
-        if(targetArticle == null) {
+        if (targetArticle == null) {
             return "게시물이 존재하지 않습니다";
         }
         CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
         User requestUser = userRepository.findByLoginId(userDetails.getUsername());
-        if(requestUser == null) {
-            return  "요청을 보낸 유저가 존재하지 않습니다";
+        if (requestUser == null) {
+            return "요청을 보낸 유저가 존재하지 않습니다";
         }
-        if(targetArticle.getStatus().equals("매칭 완료")) {
+        if (targetArticle.getStatus().equals("매칭 완료")) {
             return "이미 매칭 완료된 게시물입니다";
         }
 
-        Matching requestMatching = matchingRepository.findByArticleIdAndFactory(request.getArticleId(), requestUser);
-        if(requestMatching == null) {
+        // --- 이 부분의 코드를 수정했습니다. ---
+        // findByArticleIdAndFactory 메서드가 Optional<Matching>을 반환한다고 가정하고 코드를 작성했습니다.
+        Optional<Matching> requestMatchingOptional = matchingRepository.findByArticleIdAndFactory(request.getArticleId(), requestUser);
+
+        if (requestMatchingOptional.isEmpty()) {
             String requestDate = LocalDate.now().toString();
             Matching newMatching = new Matching();
 
@@ -59,14 +63,13 @@ public class DetailPageService {
             newMatching.setMatchingStatus("매칭 대기");
 
             matchingRepository.save(newMatching);
-            if(targetArticle.getStatus().equals("대기 중")){
+            if (targetArticle.getStatus().equals("대기 중")) {
                 targetArticle.setStatus("매칭 대기");
             }
-        }else{
+        } else {
             return "이미 매칭 신청을 한 게시물입니다.";
         }
 
         return "매칭신청 완료";
     }
-
 }
