@@ -64,15 +64,22 @@ public class FactoryMyPageService {
     }
 
     @Transactional
-    public boolean putUserProfileArticles(@RequestBody PutFactoryMyPageProfileRequest putFactoryMyPageProfileRequest, Long userId) {
+    public boolean putUserProfileArticles(@RequestBody PutFactoryMyPageProfileRequest request, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("유저가 없습니다. id=" + userId));
-        String encodedPassword = bCryptPasswordEncoder.encode(putFactoryMyPageProfileRequest.getPassword());
+        String encodedPassword = bCryptPasswordEncoder.encode(request.getPassword());
 
-        user.setName(putFactoryMyPageProfileRequest.getName());
-        user.setPassword(encodedPassword);
-        user.setPhoneNumber(putFactoryMyPageProfileRequest.getPhoneNumber());
-        user.setMainAddress(putFactoryMyPageProfileRequest.getMainAddress());
-        user.setDetailAddress(putFactoryMyPageProfileRequest.getDetailAddress());
+        if(request.getPassword() != null && !request.getPassword().isBlank()) {
+            user.setPassword(encodedPassword);
+        }
+        if(request.getPhoneNumber() != null && !request.getPhoneNumber().isBlank()) {
+            user.setPhoneNumber(request.getPhoneNumber());
+        }
+        if(request.getMainAddress() != null && !request.getMainAddress().isBlank()) {
+            user.setMainAddress(request.getMainAddress());
+        }
+        if(request.getDetailAddress() != null && !request.getDetailAddress().isBlank()) {
+            user.setDetailAddress(request.getDetailAddress());
+        }
 
         return true;
     }

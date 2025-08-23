@@ -39,7 +39,7 @@ public class FactoryMyPageController {
     public ResponseEntity<?> putUserProfileArticles(@RequestBody PutFactoryMyPageProfileRequest putFactoryMyPageProfileRequest, @AuthenticationPrincipal CustomUserDetail user) {
         boolean success = factoryMypageService.putUserProfileArticles(
                 putFactoryMyPageProfileRequest,
-                user.getId() // 로그인한 유저의 ID
+                user.getId()
         );
 
         return ResponseEntity.ok(Map.of("success", success));

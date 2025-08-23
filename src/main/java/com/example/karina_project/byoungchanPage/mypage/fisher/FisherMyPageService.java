@@ -114,19 +114,25 @@ public class FisherMyPageService {
     }
 
     @Transactional
-    public boolean editFisherMyPageInfoService(PutFisherMyPageInfoRequest putFisherMyPageInfoRequest, Long userId) {
+    public boolean editFisherMyPageInfoService(PutFisherMyPageInfoRequest request, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 유저가 없습니다. id=" + userId));
 
-        String encodedPassword = bCryptPasswordEncoder.encode(putFisherMyPageInfoRequest.getPassword());
+        String encodedPassword = bCryptPasswordEncoder.encode(request.getPassword());
 
-        user.setName(putFisherMyPageInfoRequest.getName());
-        user.setPassword(encodedPassword);
-        user.setPhoneNumber(putFisherMyPageInfoRequest.getPhoneNumber());
-        user.setMainAddress(putFisherMyPageInfoRequest.getMainAddress());
-        user.setDetailAddress(putFisherMyPageInfoRequest.getDetailAddress());
+        if(request.getPassword() != null && !request.getPassword().isBlank()) {
+            user.setPassword(encodedPassword);
+        }
+        if(request.getPhoneNumber() != null && !request.getPhoneNumber().isBlank()) {
+            user.setPhoneNumber(request.getPhoneNumber());
+        }
+        if(request.getMainAddress() != null && !request.getMainAddress().isBlank()) {
+            user.setMainAddress(request.getMainAddress());
+        }
+        if(request.getDetailAddress() != null && !request.getDetailAddress().isBlank()) {
+            user.setDetailAddress(request.getDetailAddress());
+        }
 
-        userRepository.save(user);
         return true;
     }
 
