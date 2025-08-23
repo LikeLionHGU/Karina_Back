@@ -51,7 +51,7 @@ public class FisherMyPageController {
     }
 
     @PutMapping("/mypage/posts")
-    public ResponseEntity<String> editFisherMypageArticle(@RequestPart("info") PutFisherMyPageArticleRequest putFisherMypageArticleRequest, @RequestPart("thumbnail") MultipartFile file) throws IOException {
+    public ResponseEntity<String> editFisherMyPageArticle(@RequestPart("info") PutFisherMyPageArticleRequest putFisherMypageArticleRequest, @RequestPart("thumbnail") MultipartFile file) throws IOException {
         String s3Url = fileService.uploadFile(file, "thumbnail/");
         String response = fisherMypageService.editFisherMyPageArticleService(putFisherMypageArticleRequest, s3Url);
         return ResponseEntity.ok().body(response);
