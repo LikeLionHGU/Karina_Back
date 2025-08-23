@@ -1,7 +1,7 @@
 package com.example.karina_project.sehyukPage.login_page.config;
 
 import com.example.karina_project.sehyukPage.login_page.jwt.JWTFilter;
-import com.example.karina_project.sehyukPage.login_page.jwt.JWTUtill;
+import com.example.karina_project.sehyukPage.login_page.jwt.JWTUtil;
 import com.example.karina_project.sehyukPage.login_page.jwt.LoginFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class SecurityConfig {
 
 
     private final AuthenticationConfiguration authenticationConfiguration;
-    private final JWTUtill jwtUtill;
+    private final JWTUtil jwtUtill;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {

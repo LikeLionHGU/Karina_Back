@@ -10,11 +10,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Component
-public class JWTUtill {
+public class JWTUtil {
 
     private SecretKey secretKey;
 
-    public JWTUtill(@Value("${spring.jwt.secret}")String secret) {
+    public JWTUtil(@Value("${spring.jwt.secret}")String secret) {
 
 
         secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
@@ -22,7 +22,7 @@ public class JWTUtill {
 
     public String getUsername(String token) {
 
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("loginId", String.class);
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("username", String.class);
     }
 
     public String getRole(String token) {
@@ -35,10 +35,10 @@ public class JWTUtill {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
     }
 
-    public String createJwt(String loginId, String role, Long userId, String realUserName, Long expiredMs) {
+    public String createJwt(String username, String role, Long userId, String realUserName, Long expiredMs) {
 
         return Jwts.builder()
-                .claim("loginId", loginId)
+                .claim("username", username)
                 .claim("role", role)
                 .claim("userId", userId)
                 .claim("realUserName", realUserName)
