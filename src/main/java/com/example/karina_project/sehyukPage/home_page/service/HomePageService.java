@@ -25,16 +25,4 @@ public class HomePageService {
 
        return articleDtos;
     }
-
-    @Transactional(readOnly = true)
-    public List<ArticleDto> getArticlesByFishSpecies(String fishSpecies) {
-        Pageable pageable = PageRequest.of(0, 9); // (캐스팅 불필요)
-        List<ArticleDto> articleDtos =
-                articleRepository
-                        .findArticlesByStatusNotContainsKeywordAndContainFishSpeciesWithPostTimeDesc(
-                                "매칭 완료", fishSpecies, pageable
-                        )
-                        .stream().map(ArticleDto::from).toList();
-        return articleDtos;
-    }
 }
