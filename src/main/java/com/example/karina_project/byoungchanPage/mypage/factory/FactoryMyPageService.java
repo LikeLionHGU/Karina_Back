@@ -49,6 +49,10 @@ public class FactoryMyPageService {
         CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
         User factory = userRepository.findByLoginId(userDetails.getUsername());
 
+        System.out.println(userDetails.getUsername()); // userDetails.toString() 호출
+
+
+
         return GetFactoryMyPageResponse.builder()
                 .matchingSuccessList(getMatchingSuccessList(factory))
                 .matchingNotSuccessList(getMatchingUnSuccessList(factory))
