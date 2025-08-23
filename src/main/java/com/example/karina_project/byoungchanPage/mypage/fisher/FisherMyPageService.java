@@ -3,7 +3,6 @@ package com.example.karina_project.byoungchanPage.mypage.fisher;
 
 import com.example.karina_project.byoungchanPage.mypage.fisher.dto.GetFisherMyPageArticleDto;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.FisherMyPageMatchingAcceptRequest;
-import com.example.karina_project.byoungchanPage.mypage.fisher.request.FisherMyPageRequestWithOnlyArticleId;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageArticleRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageInfoRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageArticleResponse;
@@ -65,8 +64,8 @@ public class FisherMyPageService {
     public String matchAccepting(FisherMyPageMatchingAcceptRequest request, Authentication authentication) {
 
         User factory = userRepository.findById(request.getFactoryId()).orElseThrow(EntityNotFoundException::new);
-
-        Matching matching = matchingRepository.findByArticleIdAndFactory(request.getArticleId(), factory);
+        Matching matching = matchingRepository.findByArticleIdAndFactory(request.getArticleId(), factory)
+                .orElseThrow(EntityNotFoundException::new); // 매칭 객체가 없으면 예외를 발생시킵니다.
         matching.setMatchingStatus("매칭 성공");
 
         List<Matching> unmatchingList = matchingRepository.findByArticleIdAndMatchingStatus(request.getArticleId(), "매칭 대기");
