@@ -14,22 +14,18 @@ import com.example.karina_project.domain.User;
 import com.example.karina_project.repository.ArticleRepository;
 import com.example.karina_project.repository.MatchingRepository;
 import com.example.karina_project.repository.UserRepository;
-import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import com.example.karina_project.sehyukPage.register_page.service.FileService;
-import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.List;
+
 import static java.util.stream.Collectors.toList;
 
 @Service

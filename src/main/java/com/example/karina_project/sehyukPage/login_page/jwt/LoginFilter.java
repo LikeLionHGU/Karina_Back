@@ -1,7 +1,7 @@
 package com.example.karina_project.sehyukPage.login_page.jwt;
 
-import com.example.karina_project.sehyukPage.login_page.token.CustomAuthenticationToken;
 import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
+import com.example.karina_project.sehyukPage.login_page.token.CustomAuthenticationToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 
 import java.io.IOException;
 import java.util.Collection;
