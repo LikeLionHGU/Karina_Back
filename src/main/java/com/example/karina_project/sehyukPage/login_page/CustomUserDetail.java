@@ -21,6 +21,7 @@ public class CustomUserDetail implements UserDetails {
         return List.of(new SimpleGrantedAuthority(role));
     }
 
+    public String getUserRealName(){return user.getName();}
     public Long getId(){ return user.getId(); }
     @Override public String getPassword() { return user.getPassword(); }
     @Override public String getUsername() { return user.getLoginId(); }
