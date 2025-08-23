@@ -47,7 +47,7 @@ public class FactoryMyPageController {
     }
 
     @PostMapping("/mypage/matchingCancel")
-    public ResponseEntity<String> matchingCancel(FactoryMyPageRequestWithOnlyArticleId request, Authentication authentication) {
+    public ResponseEntity<String> matchingCancel(@RequestBody FactoryMyPageRequestWithOnlyArticleId request, Authentication authentication) {
         String response = factoryMypageService.requestMatchingCancel(request, authentication);
 
         return ResponseEntity.ok().body(response);
