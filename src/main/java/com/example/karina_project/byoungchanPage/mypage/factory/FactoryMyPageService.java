@@ -81,7 +81,6 @@ public class FactoryMyPageService {
 
         Long articleId = request.getArticleId();
 
-        // Optional을 반환하므로, isPresent() 또는 isEmpty()로 존재 여부를 확인합니다.
         Optional<Matching> requestMatchingOptional = matchingRepository.findByArticleIdAndFactory(articleId, factory);
 
         if (requestMatchingOptional.isEmpty()) {
@@ -89,17 +88,14 @@ public class FactoryMyPageService {
             return "fail";
         }
 
-        // Optional에서 실제 Matching 객체를 안전하게 꺼냅니다.
         Matching requestMatching = requestMatchingOptional.get();
         matchingRepository.delete(requestMatching);
 
-        // findByArticleId도 Optional을 반환하도록 수정했다고 가정합니다.
         Optional<Matching> matchingOptional = matchingRepository.findByArticleId(articleId);
         if (matchingOptional.isEmpty()) {
             Article requestArticle = articleRepository.findById(articleId)
                     .orElseThrow(() -> new IllegalArgumentException("No Article: " + articleId));
             requestArticle.setStatus("대기 중");
-            // @Transactional이 적용되어 있으므로 save() 호출 없이도 변경 사항이 반영됩니다.
         }
 
         return "success";
