@@ -1,6 +1,6 @@
 package com.example.karina_project.byoungchanPage.mypage.fisher;
 
-import com.example.karina_project.byoungchanPage.mypage.fisher.request.FisherMyPageRequestWithOnlyArticleId;
+import com.example.karina_project.byoungchanPage.mypage.fisher.request.FisherMyPageMatchingAcceptRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageArticleRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageInfoRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageArticleResponse;
@@ -31,14 +31,14 @@ public class FisherMyPageController {
 
     @GetMapping("/mypage")
     public ResponseEntity<List<GetFisherMyPageResponse>> getFisherMyPage(@AuthenticationPrincipal CustomUserDetail user) {
-        List<GetFisherMyPageResponse> response = fisherMypageService.getFisherMypageServiece(user.getId());
+        List<GetFisherMyPageResponse> response = fisherMypageService.getFisherMyPageService(user.getId());
 
         return ResponseEntity.ok().body(response);
     }
 
     @PutMapping("/mypage")
-    public ResponseEntity<String> matchAccepting(@RequestBody FisherMyPageRequestWithOnlyArticleId request, Authentication authentication) {
-        String response = fisherMypageService.matchAccepting(request.getArticleId(), authentication);
+    public ResponseEntity<String> matchAccepting(@RequestBody FisherMyPageMatchingAcceptRequest request, Authentication authentication) {
+        String response = fisherMypageService.matchAccepting(request, authentication);
 
         return ResponseEntity.ok().body(response);
     }

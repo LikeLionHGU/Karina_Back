@@ -41,6 +41,7 @@ public class FactoryMyPageService {
         return UnSuccessList;
     }
 
+    @Transactional(readOnly = true)
     public GetFactoryMyPageResponse getUserArticles(Authentication authentication) {
         CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
         User factory = userRepository.findByLoginId(userDetails.getUsername());

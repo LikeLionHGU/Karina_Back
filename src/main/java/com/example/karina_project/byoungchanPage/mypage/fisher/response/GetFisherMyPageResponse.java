@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class GetFisherMyPageResponse {
 
     private Long articleId;
+    private Long factoryId;
     private String factoryName;
     private String phoneNumber;
     private Map<String, Integer> fishInfo;
@@ -34,6 +35,7 @@ public class GetFisherMyPageResponse {
 
     public static GetFisherMyPageResponse from(Matching matching) {
         return GetFisherMyPageResponse.builder()
+                .factoryId(matching.getFactory().getId())
                 .factoryName(matching.getFactory().getName())
                 .phoneNumber(matching.getFactory().getPhoneNumber())
                 .articleId(matching.getArticle().getId())

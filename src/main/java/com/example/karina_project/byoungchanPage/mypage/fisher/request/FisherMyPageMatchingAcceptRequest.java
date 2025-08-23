@@ -7,7 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class FisherMyPageRequestWithOnlyArticleId {
+public class FisherMyPageMatchingAcceptRequest {
 
     private Long articleId;
+    private Long factoryId;
 }
