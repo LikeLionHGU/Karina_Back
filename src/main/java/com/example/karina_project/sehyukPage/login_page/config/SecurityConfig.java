@@ -86,6 +86,7 @@ public class SecurityConfig {
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()          // ← Swagger 허용
                         .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll() // ← CORS preflight 허용(권장)
                         .requestMatchers("/", "/index", "/public/**", "/user/**").permitAll()
+                        .requestMatchers("/fisher/mypage/profile").authenticated()
                         .requestMatchers("/fisher/**").hasAnyAuthority("ROLE_FISHER", "ROLE_ADMIN")
                         .requestMatchers("/factory/**").hasAnyAuthority("ROLE_FACTORY", "ROLE_ADMIN")
                         .anyRequest().authenticated()

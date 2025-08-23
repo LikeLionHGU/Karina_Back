@@ -35,15 +35,27 @@ public class JWTUtill {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
     }
 
-    public String createJwt(String username, String role, Long expiredMs) {
+    public String createJwt(String username, String role, Long userId, Long expiredMs) {
 
         return Jwts.builder()
                 .claim("username", username)
                 .claim("role", role)
+                .claim("userId", userId) // ★★★ userId 클레임 추가
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))
                 .signWith(secretKey)
                 .compact();
+    }
+    public Long getUserId(String token) {
+        Object v = Jwts.parser().verifyWith(secretKey).build()
+                .parseSignedClaims(token).getPayload().get("userId");
+
+        if (v == null) return null;
+        if (v instanceof Long l) return l;
+        if (v instanceof Integer i) return i.longValue();
+        if (v instanceof String s) return Long.parseLong(s);
+
+        return Long.parseLong(String.valueOf(v));
     }
 
 }

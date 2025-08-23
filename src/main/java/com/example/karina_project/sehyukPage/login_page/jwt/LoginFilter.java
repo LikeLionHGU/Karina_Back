@@ -1,7 +1,7 @@
 package com.example.karina_project.sehyukPage.login_page.jwt;
 
-import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import com.example.karina_project.sehyukPage.login_page.token.CustomAuthenticationToken;
+import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 
 import java.io.IOException;
 import java.util.Collection;
@@ -44,13 +45,15 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String username = customUserDetails.getUsername();
 
+        Long userId = customUserDetails.getId();
+
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
 
         String role = auth.getAuthority();
-        long HoursInMillis = TimeUnit.HOURS.toMillis(2);
-        String token = jwtUtill.createJwt(username, role, HoursInMillis);
+        long HoursInMillis = TimeUnit.HOURS.toMillis(3);
+        String token = jwtUtill.createJwt(username, role, userId, HoursInMillis);
 
         response.addHeader("Authorization", "Bearer " + token);
         response.setContentType("application/json");

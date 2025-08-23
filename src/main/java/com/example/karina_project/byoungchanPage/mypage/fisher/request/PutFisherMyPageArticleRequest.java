@@ -10,7 +10,7 @@ public class PutFisherMyPageArticleRequest {
     private Long articleId;
     private String getDate;
     private String getTime;
-    private String limitDate;
-    private String limitTime;
+    private String dateLimit;
+    private String timeLimit;
 
 }

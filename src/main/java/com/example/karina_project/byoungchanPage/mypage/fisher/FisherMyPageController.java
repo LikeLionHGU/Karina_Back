@@ -9,11 +9,13 @@ import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFishe
 import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import com.example.karina_project.sehyukPage.register_page.service.FileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.List;
@@ -56,9 +58,13 @@ public class FisherMyPageController {
     }
 
     @GetMapping("/mypage/profile")
-    public ResponseEntity<GetFisherMyPageInfoResponse> getFisherMyPageInfo(@AuthenticationPrincipal CustomUserDetail user) {
+    public ResponseEntity<GetFisherMyPageInfoResponse> getFisherMyPageInfo(
+            @AuthenticationPrincipal(expression = "id") Long userId) {
 
-        return ResponseEntity.ok(fisherMypageService.getFisherMypageInfo(user.getId()));
+        if (userId == null) { // 비인증/잘못된 토큰
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다.");
+        }
+        return ResponseEntity.ok(fisherMypageService.getFisherMypageInfo(userId));
     }
 
     @PutMapping("/mypage/profile")

@@ -15,9 +15,12 @@ import com.example.karina_project.repository.MatchingRepository;
 import com.example.karina_project.repository.UserRepository;
 import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import com.example.karina_project.sehyukPage.register_page.service.FileService;
+import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +35,9 @@ public class FisherMyPageService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
     private final MatchingRepository matchingRepository;
+    private final HttpServletResponse httpServletResponse;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private final FileService fileService;
 
     @Transactional
@@ -95,9 +101,9 @@ public class FisherMyPageService {
 
         article.setGetDate(request.getGetDate());
         article.setGetTime(request.getGetTime());
-        article.setLimitDate(request.getLimitDate());
-        article.setLimitTime(request.getLimitTime());
-        article.setThumbnail(thumbnailUrl);
+        article.setLimitDate(request.getDateLimit());
+        article.setLimitTime(request.getTimeLimit());
+        article.setThumbnail((thumbnailUrl));
 
         return "success";
     }
@@ -113,7 +119,9 @@ public class FisherMyPageService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 유저가 없습니다. id=" + userId));
 
-        user.setPassword(putFisherMyPageInfoRequest.getPassword());
+        String encodedPassword = bCryptPasswordEncoder.encode(putFisherMyPageInfoRequest.getPassword());
+
+        user.setPassword(encodedPassword);
         user.setPhoneNumber(putFisherMyPageInfoRequest.getPhoneNumber());
         user.setMainAddress(putFisherMyPageInfoRequest.getMainAddress());
         user.setDetailAddress(putFisherMyPageInfoRequest.getDetailAddress());
