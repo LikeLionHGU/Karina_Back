@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
-    private final JWTUtill jwtUtill;
+    private final JWTUtil jwtUtill;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {

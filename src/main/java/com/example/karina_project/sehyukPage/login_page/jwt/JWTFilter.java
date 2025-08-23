@@ -19,7 +19,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
 
-    private final JWTUtill jwtUtill;
+    private final JWTUtil jwtUtill;
     private final org.springframework.util.AntPathMatcher matcher = new org.springframework.util.AntPathMatcher();
     private static final String[] WHITELIST = {
             "/", "/index", "/public/**", "/user/**",
