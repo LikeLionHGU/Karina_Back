@@ -22,7 +22,7 @@ public class JWTUtill {
 
     public String getUsername(String token) {
 
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("loginId", String.class);
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("username", String.class);
     }
 
     public String getRole(String token) {
@@ -35,10 +35,10 @@ public class JWTUtill {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
     }
 
-    public String createJwt(String loginId, String role, Long userId, String realUserName, Long expiredMs) {
+    public String createJwt(String username, String role, Long userId, String realUserName, Long expiredMs) {
 
         return Jwts.builder()
-                .claim("loginId", loginId)
+                .claim("username", username)
                 .claim("role", role)
                 .claim("userId", userId)
                 .claim("realUserName", realUserName)
