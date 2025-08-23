@@ -78,9 +78,8 @@ public class FactoryMyPageService {
         User factory = userRepository.findByLoginId(userDetails.getUsername());
 
         Long articleId = request.getArticleId();
-        System.out.println("[DEBUG] articleId=" + articleId + ", factoryId=" + (factory != null ? factory.getId() : null));
 
-        Matching requestMatching = matchingRepository.findByArticleIdAndFactory(articleId, factory); // 또는 findByArticle_IdAndFactory
+        Matching requestMatching = matchingRepository.findByArticleIdAndFactory(articleId, factory);
 
         if (requestMatching == null) {
             System.out.println("[DEBUG] matching not found for articleId=" + articleId + ", factory=" + (factory != null ? factory.getLoginId() : null));
