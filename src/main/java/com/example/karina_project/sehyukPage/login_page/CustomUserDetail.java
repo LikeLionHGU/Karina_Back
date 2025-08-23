@@ -24,7 +24,7 @@ public class CustomUserDetail implements UserDetails {
     public String getUserRealName(){return user.getName();}
     public Long getId(){ return user.getId(); }
     @Override public String getPassword() { return user.getPassword(); }
-    @Override public String getUsername() { return user.getName(); }
+    @Override public String getUsername() { return user.getLoginId(); }
     @Override public boolean isAccountNonExpired() { return true; }
     @Override public boolean isAccountNonLocked() { return true; }
     @Override public boolean isCredentialsNonExpired() { return true; }
