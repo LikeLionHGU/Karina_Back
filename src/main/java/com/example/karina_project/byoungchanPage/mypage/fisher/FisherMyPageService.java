@@ -17,6 +17,7 @@ import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import com.example.karina_project.sehyukPage.register_page.service.FileService;
 import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.Authentication;

@@ -1,3 +1,5 @@
+/**
+
 --
 -- User 테이블 더미 데이터
 --
@@ -39,3 +41,6 @@ INSERT INTO matching (id, factory_id, article_id, request_date, matching_status)
 INSERT INTO matching (id, factory_id, article_id, request_date, matching_status) VALUES (8, 5, 8, '2025-08-16', '대기중');
 INSERT INTO matching (id, factory_id, article_id, request_date, matching_status) VALUES (9, 7, 9, '2025-08-15', '매칭완료');
 INSERT INTO matching (id, factory_id, article_id, request_date, matching_status) VALUES (10, 9, 10, '2025-08-14', '대기중');
+
+
+ */

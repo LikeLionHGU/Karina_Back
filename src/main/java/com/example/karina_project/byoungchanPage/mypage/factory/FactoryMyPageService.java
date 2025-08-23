@@ -71,26 +71,32 @@ public class FactoryMyPageService {
 
     @Transactional
     public String requestMatchingCancel(FactoryMyPageRequestWithOnlyArticleId request, Authentication authentication) {
-        CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
-        if(userDetails == null) {
+        if (authentication == null || authentication.getPrincipal() == null) {
             return "can't find user";
         }
+        CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
         User factory = userRepository.findByLoginId(userDetails.getUsername());
-        Matching requestMatching = matchingRepository.findByArticleIdAndFactory(request.getArticleId(), factory);
 
-        if(requestMatching == null) {
+        Long articleId = request.getArticleId();
+        System.out.println("[DEBUG] articleId=" + articleId + ", factoryId=" + (factory != null ? factory.getId() : null));
+
+        Matching requestMatching = matchingRepository.findByArticleIdAndFactory(articleId, factory); // 또는 findByArticle_IdAndFactory
+
+        if (requestMatching == null) {
+            System.out.println("[DEBUG] matching not found for articleId=" + articleId + ", factory=" + (factory != null ? factory.getLoginId() : null));
             return "fail";
         }
+
         matchingRepository.delete(requestMatching);
 
-        Matching matching = matchingRepository.findByArticleId(request.getArticleId());
-
-        if(matching == null) {
-            Article requestArticle = articleRepository.findById(request.getArticleId())
-                    .orElseThrow(() -> new IllegalArgumentException("No Article: " + request.getArticleId()));
+        Matching matching = matchingRepository.findByArticleId(articleId); // 또는 findByArticle_Id
+        if (matching == null) {
+            Article requestArticle = articleRepository.findById(articleId)
+                    .orElseThrow(() -> new IllegalArgumentException("No Article: " + articleId));
             requestArticle.setStatus("대기 중");
+            // 보통 여기서는 @Transactional 필요하거나 articleRepository.save(requestArticle) 호출
         }
-
         return "success";
     }
+
 }
