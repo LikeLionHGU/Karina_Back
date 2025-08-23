@@ -12,6 +12,7 @@ import java.util.Map;
 @Builder
 public class GetFactoryMyPageDto {
 
+    private Long articleId;
     private Map<String, Integer> fishInfo;
     private String getDate;
     private String getTime;
@@ -21,6 +22,7 @@ public class GetFactoryMyPageDto {
 
     public static GetFactoryMyPageDto from(Matching matching){
         return GetFactoryMyPageDto.builder()
+                .articleId(matching.getArticle().getId())
                 .fishInfo(matching.getArticle().getFishInfo())
                 .getDate(matching.getArticle().getGetDate())
                 .getTime(matching.getArticle().getGetTime())
