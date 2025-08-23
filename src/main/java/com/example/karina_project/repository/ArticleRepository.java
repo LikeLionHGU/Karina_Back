@@ -20,13 +20,18 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("SELECT a FROM Article a JOIN FETCH a.user WHERE a.status <> :status ORDER BY a.postDate DESC")
     List<Article> findArticlesByStatusNotContainsKeywordWithPostTimeDesc(@Param("status") String status, Pageable pageable);
 
-    @Query(value = "SELECT a.* FROM article a " +
-            "JOIN user u ON a.user_id = u.id " +
-            "WHERE a.status <> :status " +
-            "AND JSON_CONTAINS_PATH(a.fish_info, 'one', :fishSpecies) " +
-            "ORDER BY a.post_date DESC",
-            nativeQuery = true)
-    List<Article> findArticlesByStatusNotContainsKeywordWithPostTimeDesc(
+    @Query(
+            value = """
+    SELECT a.*
+    FROM article a
+    JOIN `user` u ON a.user_id = u.id
+    WHERE a.status <> :status
+      AND JSON_CONTAINS_PATH(a.fish_info, 'one', CONCAT('$.', :fishSpecies))
+    ORDER BY a.post_date DESC
+    """,
+            nativeQuery = true
+    )
+    List<Article> findArticlesByStatusNotContainsKeywordAndContainFishSpeciesWithPostTimeDesc(
             @Param("status") String status,
             @Param("fishSpecies") String fishSpecies,
             Pageable pageable

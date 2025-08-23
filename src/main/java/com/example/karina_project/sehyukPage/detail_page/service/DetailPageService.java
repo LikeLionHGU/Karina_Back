@@ -24,6 +24,7 @@ public class DetailPageService {
     private final MatchingRepository matchingRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     public DetailPageDto getDetailArticleInfo(DetailPageRequest request) {
         Article article = articleRepository.findById(request.getArticleId()).orElse(null);
         DetailPageDto detailPageDto = DetailPageDto.from(article);
