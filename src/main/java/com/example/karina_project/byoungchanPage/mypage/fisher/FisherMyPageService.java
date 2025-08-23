@@ -2,6 +2,7 @@ package com.example.karina_project.byoungchanPage.mypage.fisher;
 
 
 import com.example.karina_project.byoungchanPage.mypage.fisher.dto.GetFisherMyPageArticleDto;
+import com.example.karina_project.byoungchanPage.mypage.fisher.request.FisherMyPageMatchingAcceptRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageArticleRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageInfoRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageArticleResponse;
@@ -44,7 +45,7 @@ public class FisherMyPageService {
     private final FileService fileService;
 
     @Transactional
-    public List<GetFisherMyPageResponse> getFisherMypageServiece(Long userId) {
+    public List<GetFisherMyPageResponse> getFisherMyPageService(Long userId) {
 
         List<Article> articles =  articleRepository.findByUserIdAndStatusNotOrderByIdDesc(userId, "매칭 완료");
 
@@ -60,38 +61,19 @@ public class FisherMyPageService {
     }
 
     @Transactional
-    public String matchAccepting(Long articleId, Authentication authentication) {
-        var principal = (CustomUserDetail) authentication.getPrincipal();
+    public String matchAccepting(FisherMyPageMatchingAcceptRequest request, Authentication authentication) {
 
-        User me = userRepository.findByLoginId(principal.getUsername());
-        if (me == null) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "사용자 없음");
+        User factory = userRepository.findById(request.getFactoryId()).orElseThrow(EntityNotFoundException::new);
 
-        Article article = articleRepository.findById(articleId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글 없음: " + articleId));
+        Matching matching = matchingRepository.findByArticleIdAndFactory(request.getArticleId(), factory);
+        matching.setMatchingStatus("매칭 성공");
 
-        // [권한검증] 이 글의 소유자가 나인지(또는 내가 수락 권한이 있는지)
-        if (!article.getUser().getId().equals(me.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "이 글에 대한 수락 권한이 없습니다.");
+        List<Matching> unmatchingList = matchingRepository.findByArticleIdAndMatchingStatus(request.getArticleId(), "매칭 대기");
+
+        for(Matching unmatching : unmatchingList) {
+            unmatching.setMatchingStatus("매칭 마감");
         }
 
-        // ---- 여기가 핵심 분기 ----
-        // (A) Fisher가 수락한다면: 현재 유저가 Fisher 기준으로 조회
-        // Optional<Matching> opt = matchingRepository.findByArticleIdAndFisher(articleId, me);
-
-        // (B) 특정 Factory를 수락한다면: 요청 바디에 factoryId(또는 matchingId)를 받자
-        // 그리고 그 대상을 조회
-        // Optional<Matching> opt = matchingRepository.findByArticleIdAndFactory(articleId, factoryUser);
-
-        Matching accept = matchingRepository
-                .findByArticleIdAndFactory(articleId, me) // <= 현재 구조에 맞게 ‘정말’ 맞는 메서드로 바꾸세요
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 조합의 매칭이 없습니다."));
-
-        accept.setMatchingStatus("매칭 성공");
-
-        // 나머지는 일괄 마감 (벌크 업데이트 권장)
-        matchingRepository.closeOthers(articleId, accept.getId());
-
-        article.setStatus("매칭 완료");
         return "success";
     }
 

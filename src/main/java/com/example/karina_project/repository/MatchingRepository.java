@@ -20,15 +20,5 @@ public interface MatchingRepository extends JpaRepository<Matching, Long> {
     List<Matching> findByFactoryAndMatchingStatusNotOrderByIdDesc(User factory, String status);
 
     List<Matching> findByArticleIdInAndMatchingStatus(List<Long> articleIds, String status);
-    List<Matching> findByFactoryOrderByIdDesc(User factor);
-    List<Matching> findAllByArticleIdAndFactoryNot(Long articleId, User factory);
-
-        Optional<Matching> findByArticleIdAndFactoryUsingFisher(Long articleId, User factory);
-        Optional<Matching> findByArticleIdAndFisher(Long articleId, User fisher);
-
-        @Modifying(clearAutomatically = true, flushAutomatically = true)
-        @Query("update Matching m set m.matchingStatus = '매칭 마감' " +
-                "where m.article.id = :articleId and m.id <> :acceptedId")
-        int closeOthers(@Param("articleId") Long articleId, @Param("acceptedId") Long acceptedId);
-
+    List<Matching> findByArticleIdAndMatchingStatus(Long articleId, String status);
 }
