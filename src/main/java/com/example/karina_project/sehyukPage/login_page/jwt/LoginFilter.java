@@ -42,9 +42,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException {
         CustomUserDetail customUserDetails = (CustomUserDetail) authentication.getPrincipal();
 
-        String username = customUserDetails.getUsername();
+        String loginId = customUserDetails.getUsername();
 
         Long userId = customUserDetails.getId();
+        String realUserName = customUserDetails.getUserRealName();
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
@@ -52,13 +53,16 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String role = auth.getAuthority();
         long HoursInMillis = TimeUnit.HOURS.toMillis(3);
-        String token = jwtUtill.createJwt(username, role, userId, HoursInMillis);
+        String token = jwtUtill.createJwt(loginId, role, userId, realUserName, HoursInMillis);
 
         response.addHeader("Authorization", "Bearer " + token);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        Map<String, String> responseBody = Map.of("role", role);
+        Map<String, String> responseBody = Map.of(
+                "role", role,
+                "userName", realUserName
+        );
 
         new ObjectMapper().writeValue(response.getWriter(), responseBody);
     }
