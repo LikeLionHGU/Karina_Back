@@ -9,6 +9,7 @@ import lombok.Setter;
 @Builder
 public class PutFactoryMyPageProfileRequest {
     private String name;
+    private String password;
     private String phoneNumber;
     private String mainAddress;
     private String detailAddress;

@@ -120,6 +120,7 @@ public class FisherMyPageService {
 
         String encodedPassword = bCryptPasswordEncoder.encode(putFisherMyPageInfoRequest.getPassword());
 
+        user.setName(putFisherMyPageInfoRequest.getName());
         user.setPassword(encodedPassword);
         user.setPhoneNumber(putFisherMyPageInfoRequest.getPhoneNumber());
         user.setMainAddress(putFisherMyPageInfoRequest.getMainAddress());

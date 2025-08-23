@@ -16,6 +16,7 @@ import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,8 @@ public class FactoryMyPageService {
     private final UserRepository userRepository;
     private final ArticleRepository articleRepository;
     private final MatchingRepository matchingRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     public List<GetFactoryMyPageDto> getMatchingSuccessList(User factory) {
         List<GetFactoryMyPageDto> SuccessList = matchingRepository.findByFactoryAndMatchingStatusOrderByIdDesc(factory, "매칭 성공").stream().map(GetFactoryMyPageDto::from).collect(Collectors.toList());
@@ -63,7 +66,10 @@ public class FactoryMyPageService {
     @Transactional
     public boolean putUserProfileArticles(@RequestBody PutFactoryMyPageProfileRequest putFactoryMyPageProfileRequest, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("유저가 없습니다. id=" + userId));
+        String encodedPassword = bCryptPasswordEncoder.encode(putFactoryMyPageProfileRequest.getPassword());
+
         user.setName(putFactoryMyPageProfileRequest.getName());
+        user.setPassword(encodedPassword);
         user.setPhoneNumber(putFactoryMyPageProfileRequest.getPhoneNumber());
         user.setMainAddress(putFactoryMyPageProfileRequest.getMainAddress());
         user.setDetailAddress(putFactoryMyPageProfileRequest.getDetailAddress());

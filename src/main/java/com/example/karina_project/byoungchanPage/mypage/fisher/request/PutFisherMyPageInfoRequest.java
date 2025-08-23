@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class PutFisherMyPageInfoRequest {
 
+    private String name;
     private String password;
     private String phoneNumber;
     private String mainAddress;
