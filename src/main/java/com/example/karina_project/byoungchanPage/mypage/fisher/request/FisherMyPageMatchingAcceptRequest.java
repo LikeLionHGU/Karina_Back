@@ -11,4 +11,5 @@ public class FisherMyPageMatchingAcceptRequest {
 
     private Long articleId;
     private Long factoryId;
+    private Long matchingId;
 }

@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,7 +50,7 @@ public class DetailPageService {
 
         // --- 이 부분의 코드를 수정했습니다. ---
         // findByArticleIdAndFactory 메서드가 Optional<Matching>을 반환한다고 가정하고 코드를 작성했습니다.
-        Optional<Matching> requestMatchingOptional = matchingRepository.findByArticleIdAndFactory(request.getArticleId(), requestUser);
+        List<Matching> requestMatchingOptional = matchingRepository.findByArticleIdAndFactory(request.getArticleId(), requestUser);
 
         if (requestMatchingOptional.isEmpty()) {
             String requestDate = LocalDate.now().toString();

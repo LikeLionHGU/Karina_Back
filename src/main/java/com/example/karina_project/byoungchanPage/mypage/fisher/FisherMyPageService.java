@@ -60,8 +60,7 @@ public class FisherMyPageService {
     public String matchAccepting(FisherMyPageMatchingAcceptRequest request, Authentication authentication) {
 
         User factory = userRepository.findById(request.getFactoryId()).orElseThrow(EntityNotFoundException::new);
-        Matching matching = matchingRepository.findByArticleIdAndFactory(request.getArticleId(), factory)
-                .orElseThrow(EntityNotFoundException::new); // 매칭 객체가 없으면 예외를 발생시킵니다.
+        Matching matching = matchingRepository.find1ByArticleIdAndFactory(request.getArticleId(), factory);
         matching.setMatchingStatus("매칭 성공");
 
         List<Matching> unmatchingList = matchingRepository.findByArticleIdAndMatchingStatus(request.getArticleId(), "매칭 대기");

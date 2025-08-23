@@ -94,17 +94,13 @@ public class FactoryMyPageService {
 
         Long articleId = request.getArticleId();
 
-        Optional<Matching> requestMatchingOptional = matchingRepository.findByArticleIdAndFactory(articleId, factory);
+        Matching requestMatching = matchingRepository.find1ByArticleIdAndFactory(articleId, factory);
 
-        if (requestMatchingOptional.isEmpty()) {
-            System.out.println("[DEBUG] matching not found for articleId=" + articleId + ", factory=" + (factory != null ? factory.getLoginId() : null));
-            return "fail";
-        }
 
-        Matching requestMatching = requestMatchingOptional.get();
+
         matchingRepository.delete(requestMatching);
 
-        Optional<Matching> matchingOptional = matchingRepository.findByArticleId(articleId);
+        List<Matching> matchingOptional = matchingRepository.findByArticleId(articleId);
         if (matchingOptional.isEmpty()) {
             Article requestArticle = articleRepository.findById(articleId)
                     .orElseThrow(() -> new IllegalArgumentException("No Article: " + articleId));
