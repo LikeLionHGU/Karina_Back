@@ -17,11 +17,11 @@ public class HomePageService {
 
     private  final ArticleRepository articleRepository;
 
-
     @Transactional
     public List<ArticleDto> getArticlesByTime() {
        Pageable pageable = PageRequest.of(0, 9);
        List<ArticleDto> articleDtos = articleRepository.findArticlesByStatusNotContainsKeywordWithPostTimeDesc("매칭 완료", pageable).stream().map(ArticleDto::from).collect(Collectors.toList());
+
 
        return articleDtos;
     }
