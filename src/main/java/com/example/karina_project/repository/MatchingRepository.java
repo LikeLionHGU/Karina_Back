@@ -13,7 +13,7 @@ public interface MatchingRepository extends JpaRepository<Matching, Long> {
     List<Matching> findByArticleIdAndFactory(Long articleId, User factory);
     List<Matching> findByArticleId(Long articleId);
 
-    Matching find1ByArticleIdAndFactory(Long articleId, User factory);
+    Matching findTopByArticleIdAndFactory(Long articleId, User factory);
 
     List<Matching> findByFactoryAndMatchingStatusOrderByIdDesc(User factory, String status);
     List<Matching> findByFactoryAndMatchingStatusNotOrderByIdDesc(User factory, String status);

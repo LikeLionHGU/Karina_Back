@@ -93,7 +93,7 @@ public class FactoryMyPageService {
 
         Long articleId = request.getArticleId();
 
-        Matching requestMatching = matchingRepository.find1ByArticleIdAndFactory(articleId, factory);
+        Matching requestMatching = matchingRepository.findTopByArticleIdAndFactory(articleId, factory);
 
 
 

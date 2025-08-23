@@ -39,6 +39,9 @@ public class DetailPageService {
             return "게시물이 존재하지 않습니다";
         }
         CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
+
+        System.out.println(userDetails.getUsername()); // userDetails.toString() 호출
+
         User requestUser = userRepository.findByLoginId(userDetails.getUsername());
         System.out.println(">>> userDetails.getUsername() = " + userDetails.getUsername());
         if (requestUser == null) {
