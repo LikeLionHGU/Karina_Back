@@ -20,7 +20,7 @@ public class HomePageService {
     @Transactional
     public List<ArticleDto> getArticlesByTime() {
        Pageable pageable = PageRequest.of(0, 9);
-       List<ArticleDto> articleDtos = articleRepository.findArticlesByStatusNotContainsKeywordWithPostTimeDesc("매칭 완료", pageable).stream().map(ArticleDto::from).collect(Collectors.toList());
+       List<ArticleDto> articleDtos = articleRepository.findArticlesByStatusNotContainsKeywordWithPostDateDesc("매칭 완료", pageable).stream().map(ArticleDto::from).collect(Collectors.toList());
 
        return articleDtos;
     }
