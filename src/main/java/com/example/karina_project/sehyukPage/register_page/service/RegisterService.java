@@ -24,6 +24,7 @@ public class RegisterService {
         String phoneNumber = request.getPhoneNumber();
         String mainAddress = request.getMainAddress();
         String detailAddress = request.getDetailAddress();
+        String postCode = request.getPostCode();
 
         Boolean isExist = userRepository.existsByLoginId(loginId);
 
@@ -42,6 +43,7 @@ public class RegisterService {
         newUser.setPhoneNumber(phoneNumber);
         newUser.setMainAddress(mainAddress);
         newUser.setDetailAddress(detailAddress);
+        newUser.setPostCode(postCode);
         newUser.setAuthenticationFile(s3Url);
 
         userRepository.save(newUser);
