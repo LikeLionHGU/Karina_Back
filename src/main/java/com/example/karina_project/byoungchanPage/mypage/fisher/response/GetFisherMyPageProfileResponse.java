@@ -24,6 +24,7 @@ public class GetFisherMyPageProfileResponse {
                 .phoneNumber(user.getPhoneNumber())
                 .mainAddress(user.getMainAddress())
                 .detailAddress(user.getDetailAddress())
+                .postCode(user.getPostCode())
                 .build();
     }
 }
