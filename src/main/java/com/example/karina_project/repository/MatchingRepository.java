@@ -18,7 +18,7 @@ public interface MatchingRepository extends JpaRepository<Matching, Long> {
     List<Matching> findByFactoryAndMatchingStatusOrderByIdDesc(User factory, String status);
     List<Matching> findByFactoryAndMatchingStatusNotOrderByIdDesc(User factory, String status);
 
-    List<Matching> findByArticleIdInAndMatchingStatus(List<Long> articleIds, String status);
+    List<Matching> findByArticleIdInAndMatchingStatusOrderByIdDesc(List<Long> articleIds, String status);
     List<Matching> findByArticleIdAndMatchingStatus(Long articleId, String status);
 
 

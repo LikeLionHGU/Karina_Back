@@ -52,8 +52,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         GrantedAuthority auth = iterator.next();
 
         String role = auth.getAuthority();
-        long HoursInMillis = TimeUnit.HOURS.toMillis(3);
-        String token = jwtUtill.createJwt(loginId, role, userId, realUserName, HoursInMillis);
+        long hoursInMillis = TimeUnit.HOURS.toMillis(3);
+        String token = jwtUtill.createJwt(loginId, role, userId, realUserName, hoursInMillis);
 
         response.addHeader("Authorization", "Bearer " + token);
         response.setContentType("application/json");

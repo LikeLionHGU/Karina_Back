@@ -35,7 +35,6 @@ public class FisherMyPageService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
     private final MatchingRepository matchingRepository;
-    private final HttpServletResponse httpServletResponse;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final FileService fileService;
@@ -50,7 +49,7 @@ public class FisherMyPageService {
         }
 
         List<Long> articleIds = articles.stream().map(Article::getId).collect(toList());
-        List<Matching> matchingList = matchingRepository.findByArticleIdInAndMatchingStatus(articleIds, "매칭 대기");
+        List<Matching> matchingList = matchingRepository.findByArticleIdInAndMatchingStatusOrderByIdDesc(articleIds, "매칭 대기");
         List<GetFisherMyPageResponse> response = matchingList.stream().map(GetFisherMyPageResponse::from).toList();
 
         return response;
