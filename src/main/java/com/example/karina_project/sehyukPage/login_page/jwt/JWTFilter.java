@@ -64,6 +64,9 @@ public class JWTFilter extends OncePerRequestFilter {
         // 토큰 만료 검사
         if (jwtUtill.isExpired(token)) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 Unathorized
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"code\": \"TOKEN_EXPIRED\"}");
             return;
         }
 
