@@ -50,6 +50,9 @@ public class User {
 
         @Column(name = "detailAddress")
         private String detailAddress;            // 상세주소
+
+        @Column(name = "postCode")
+        private String postCode;                //우편주소
     }
 
 
