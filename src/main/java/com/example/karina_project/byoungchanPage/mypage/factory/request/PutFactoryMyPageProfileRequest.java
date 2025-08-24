@@ -12,4 +12,5 @@ public class PutFactoryMyPageProfileRequest {
     private String phoneNumber;
     private String mainAddress;
     private String detailAddress;
+    private String postCode;
 }

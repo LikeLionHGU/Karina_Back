@@ -2,9 +2,9 @@ package com.example.karina_project.byoungchanPage.mypage.fisher;
 
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.FisherMyPageMatchingAcceptRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageArticleRequest;
-import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageInfoRequest;
+import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherProfileRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageArticleResponse;
-import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageInfoResponse;
+import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageProfileResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageResponse;
 import com.example.karina_project.sehyukPage.login_page.CustomUserDetail;
 import com.example.karina_project.sehyukPage.register_page.service.FileService;
@@ -58,21 +58,21 @@ public class FisherMyPageController {
     }
 
     @GetMapping("/mypage/profile")
-    public ResponseEntity<GetFisherMyPageInfoResponse> getFisherMyPageInfo(
+    public ResponseEntity<GetFisherMyPageProfileResponse> getFisherProfile(
             @AuthenticationPrincipal(expression = "id") Long userId) {
 
         if (userId == null) { // 비인증/잘못된 토큰
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다.");
         }
-        return ResponseEntity.ok(fisherMypageService.getFisherMypageInfo(userId));
+        return ResponseEntity.ok(fisherMypageService.getFisherProfileService(userId));
     }
 
     @PutMapping("/mypage/profile")
-    public ResponseEntity<?> editFisherMyPageInfo(
-            @RequestBody PutFisherMyPageInfoRequest putFisherMyPageInfoRequest,
+    public ResponseEntity<?> editFisherProfile(
+            @RequestBody PutFisherProfileRequest putFisherMyPageInfoRequest,
             @AuthenticationPrincipal CustomUserDetail user) {
 
-        boolean success = fisherMypageService.editFisherMyPageInfoService(
+        boolean success = fisherMypageService.editFisherProfileService(
                 putFisherMyPageInfoRequest,
                 user.getId()
         );

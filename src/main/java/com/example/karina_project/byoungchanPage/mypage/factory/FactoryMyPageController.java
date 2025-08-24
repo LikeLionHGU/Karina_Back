@@ -36,8 +36,8 @@ public class FactoryMyPageController {
 
 
     @PutMapping("/mypage/profile")
-    public ResponseEntity<?> putUserProfileArticles(@RequestBody PutFactoryMyPageProfileRequest putFactoryMyPageProfileRequest, @AuthenticationPrincipal CustomUserDetail user) {
-        boolean success = factoryMypageService.putUserProfileArticles(
+    public ResponseEntity<?> editUserProfile(@RequestBody PutFactoryMyPageProfileRequest putFactoryMyPageProfileRequest, @AuthenticationPrincipal CustomUserDetail user) {
+        boolean success = factoryMypageService.editUserProfileService(
                 putFactoryMyPageProfileRequest,
                 user.getId()
         );

@@ -4,9 +4,9 @@ package com.example.karina_project.byoungchanPage.mypage.fisher;
 import com.example.karina_project.byoungchanPage.mypage.fisher.dto.GetFisherMyPageArticleDto;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.FisherMyPageMatchingAcceptRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageArticleRequest;
-import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherMyPageInfoRequest;
+import com.example.karina_project.byoungchanPage.mypage.fisher.request.PutFisherProfileRequest;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageArticleResponse;
-import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageInfoResponse;
+import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageProfileResponse;
 import com.example.karina_project.byoungchanPage.mypage.fisher.response.GetFisherMyPageResponse;
 import com.example.karina_project.domain.Article;
 import com.example.karina_project.domain.Matching;
@@ -106,14 +106,14 @@ public class FisherMyPageService {
         return "success";
     }
 
-    public GetFisherMyPageInfoResponse getFisherMypageInfo(Long userId) {
+    public GetFisherMyPageProfileResponse getFisherProfileService(Long userId) {
         return userRepository.findById(userId)
-                .map(GetFisherMyPageInfoResponse::from)
+                .map(GetFisherMyPageProfileResponse::from)
                 .orElseThrow(() -> new EntityNotFoundException("유저가 없습니다. id=" + userId));
     }
 
     @Transactional
-    public boolean editFisherMyPageInfoService(PutFisherMyPageInfoRequest request, Long userId) {
+    public boolean editFisherProfileService(PutFisherProfileRequest request, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 유저가 없습니다. id=" + userId));
 

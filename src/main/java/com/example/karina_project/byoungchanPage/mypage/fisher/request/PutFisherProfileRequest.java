@@ -5,10 +5,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PutFisherMyPageInfoRequest {
+public class PutFisherProfileRequest {
 
     private String password;
     private String phoneNumber;
     private String mainAddress;
     private String detailAddress;
+    private String postCode;
 }

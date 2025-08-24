@@ -15,15 +15,17 @@ public class GetFactoryMyPageProfileResponse {
         private String phoneNumber;
         private String mainAddress;
         private String detailAddress;
+        private String postCode;
 
-        public static GetFactoryMyPageProfileResponse from(User entity) {
+        public static GetFactoryMyPageProfileResponse from(User user) {
 
             return GetFactoryMyPageProfileResponse.builder()
-                    .loginId(entity.getLoginId())
-                    .phoneNumber(entity.getPhoneNumber())
-                    .mainAddress(entity.getMainAddress())
-                    .detailAddress(entity.getDetailAddress())
-                    .name(entity.getName())
+                    .loginId(user.getLoginId())
+                    .phoneNumber(user.getPhoneNumber())
+                    .mainAddress(user.getMainAddress())
+                    .detailAddress(user.getDetailAddress())
+                    .name(user.getName())
+                    .postCode(user.getPostCode())
                     .build();
         }
 
