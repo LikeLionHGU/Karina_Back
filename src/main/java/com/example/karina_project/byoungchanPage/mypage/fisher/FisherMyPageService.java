@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -57,6 +58,9 @@ public class FisherMyPageService {
 
     @Transactional
     public String matchAccepting(FisherMyPageMatchingAcceptRequest request, Authentication authentication) {
+
+        Article article = articleRepository.findById(request.getArticleId().longValue()).orElseThrow(EntityNotFoundException::new);
+        article.setStatus("매칭 완료");
 
         User factory = userRepository.findById(request.getFactoryId()).orElseThrow(EntityNotFoundException::new);
         Matching matching = matchingRepository.findTopByArticleIdAndFactory(request.getArticleId(), factory);
