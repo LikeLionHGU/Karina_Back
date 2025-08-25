@@ -2,8 +2,12 @@
 
 <br>
 <div>
-# **잡어드림 🐟🏭**
-### 어부와 공장을 잇는 스마트한 혼획물 거래 플랫폼
+<h1 style="color: #0077B6; font-size: 3.5em; font-weight: bold; text-shadow: 2px 2px 4px #cccccc;">
+    잡어드림 🐟🏭
+  </h1>
+  <p style="font-size: 1.2em;">
+    <strong>어부와 공장을 잇는 스마트한 혼획물 거래 플랫폼</strong>
+  </p>
 </div>
 
 <br>
@@ -36,6 +40,7 @@
 <p align="center">
  <img src="https://cdn.spotvnews.co.kr/news/photo/202502/732160_1163001_946.jpg" alt="단발한 카리나" width="400px"/>
 </p>
+
 
 
 
