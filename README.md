@@ -1,8 +1,8 @@
 ﻿# Karina_Backend
 
 <br>
-<div align="center">
-잡어드림-Backend 🐟🏭
+<div>
+잡어드림 🐟🏭
 어부와 공장을 잇는 스마트한 혼획물 거래 플랫폼
 </div>
 
@@ -36,6 +36,7 @@
 <p align="center">
  <img src="https://cdn.spotvnews.co.kr/news/photo/202502/732160_1163001_946.jpg" alt="단발한 카리나" width="400px"/>
 </p>
+
 
 
 
